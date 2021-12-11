@@ -1,0 +1,45 @@
+Protokoll : Reader : Windows Hello for Business 1
+Protokoll : Reader : Windows Hello for Business 1
+AutoErkennung-PC/SC : Start : 
+AutoErkennung-PC/SC : IsConnected : False
+25.11.2021  13:55:57 : 
+
+************************* :  : 
+
+25.11.2021  13:55:57 : Automatisierte Chipkartenleser-Einrichtung : Start : 
+
+25.11.2021  13:55:57 : FindCTAPITreiber : Start : 
+25.11.2021  13:55:57 : FindCTAPITreiber : WindowsDirectory : C:\WINDOWS
+25.11.2021  13:55:57 : FindCTAPITreiber : SystemDirectory : C:\WINDOWS\system32
+25.11.2021  13:55:57 : FindCTAPITreiber : Testing:  : C:\WINDOWS\ct*.DLL
+25.11.2021  13:55:57 : FindCTAPITreiber : Testing:  : C:\WINDOWS\system32\ct*.DLL
+25.11.2021  13:55:57 : doInstallCardreader : No CTAPI Readers found : 
+25.11.2021  13:55:57 : doInstallCardreader : Found Reader : Windows Hello for Business 1
+25.11.2021  13:55:57 : doInstallCardreader : No PC/SC Readers found : 
+Protokoll : Reader : Windows Hello for Business 1
+Protokoll : Reader : Windows Hello for Business 1
+AutoErkennung-CTAPI : Start : 
+AutoErkennung-CTAPI - 1 : Treiber : C:\WINDOWS\system32\ctl3d32.dll
+AutoErkennung-CTAPI - 1 : Treiber : C:\WINDOWS\SysWOW64\ctl3d32.dll
+AutoErkennung-CT-API : keine passende Treiber-Chipkartenleser-Kombination : 
+25.11.2021  14:19:12 : 
+
+************************* :  : 
+
+25.11.2021  14:19:12 : Automatisierte Chipkartenleser-Einrichtung : Start : 
+
+25.11.2021  14:19:12 : FindCTAPITreiber : Start : 
+25.11.2021  14:19:12 : FindCTAPITreiber : WindowsDirectory : C:\WINDOWS
+25.11.2021  14:19:12 : FindCTAPITreiber : SystemDirectory : C:\WINDOWS\system32
+25.11.2021  14:19:12 : FindCTAPITreiber : Testing:  : C:\WINDOWS\ct*.DLL
+25.11.2021  14:19:12 : FindCTAPITreiber : Testing:  : C:\WINDOWS\system32\ct*.DLL
+25.11.2021  14:19:12 : doInstallCardreader : No CTAPI Readers found : 
+25.11.2021  14:19:12 : doInstallCardreader : Found Reader : Windows Hello for Business 1
+25.11.2021  14:19:12 : doInstallCardreader : No PC/SC Readers found : 
+
+
+Start :  : 25.11.2021 14:27:27
+Start : FixData : C:\Program Files (x86)\ALFBanCo8\FixData\
+Start : AllUsers : C:\ProgramData\ALFBanCo8\
+Start : CurUser : C:\Users\pc mesa\AppData\Roaming\ALFBanCo8\
+Start : Root : C:\Program Files (x86)\ALFBanCo8\
