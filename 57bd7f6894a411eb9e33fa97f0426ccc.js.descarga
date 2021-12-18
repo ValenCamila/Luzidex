@@ -1,0 +1,975 @@
+//Gift Modal Functions
+
+function modalOnLoad() {
+	var savedOptions = getLsWithExpiry("effective_apps_egw_options_LS");
+	if (savedOptions === null) {
+		window.effectiveAppsEGWGWStatus = false;
+		return;
+	}
+
+	var giftOptions = JSON.parse(savedOptions);
+	if (giftOptions["effectiveAppsEgwGiftMessage"] !== undefined && 'True' === 'True') {
+		document.getElementById("effectiveAppsEgwGiftMessage").checked = giftOptions["effectiveAppsEgwGiftMessage"];
+		window.effectiveAppsEGWGMStatus = giftOptions["effectiveAppsEgwGiftMessage"];
+	}
+	if (giftOptions["effectiveAppsEgwGiftMessageText"] !== undefined && 'True' === 'True') {
+		document.getElementById("effectiveAppsEgwGiftMessageText").value = giftOptions["effectiveAppsEgwGiftMessageText"];
+        updateRemainingCharacters();
+        window.effectiveAppsEGWGMStatus = giftOptions["effectiveAppsEgwGiftMessage"];
+	}
+	if (giftOptions["effectiveAppsEgwGiftReceipt"] !== undefined && 'True' === 'True') {
+		document.getElementById("effectiveAppsEgwGiftReceipt").checked = giftOptions["effectiveAppsEgwGiftReceipt"];
+		window.effectiveAppsEGWGRStatus = giftOptions["effectiveAppsEgwGiftReceipt"];
+	}
+	if (giftOptions["effectiveAppsEgwGiftWrap"] !== undefined && 'True' === 'True') {
+		document.getElementById("effectiveAppsEgwGiftWrap").checked = giftOptions["effectiveAppsEgwGiftWrap"];
+		window.effectiveAppsEGWGWStatus = giftOptions["effectiveAppsEgwGiftWrap"];
+		if (giftOptions.hasOwnProperty("effectiveAppsEgwGiftWrapSelectedVariantId") && giftOptions["effectiveAppsEgwGiftWrap"] === true) {
+		    setTimeout(function() {
+		        document.querySelector('[gw-variant-id="'+giftOptions["effectiveAppsEgwGiftWrapSelectedVariantId"]+'"]').click();
+		    }, 50);
+		}
+	}
+}
+
+function validateAndSaveGiftOptions() {
+	var previousOptions = getLsWithExpiry("effective_apps_egw_options_LS");
+	var giftOptions = {};
+	var giftMessageOptions = {};
+	var giftWrapOptions = {};
+	var giftReceiptOptions = {};
+	if ('True' === 'True')
+		giftMessageOptions = updateGiftMessageStatus();
+
+	if ('True' === 'True')
+		giftReceiptOptions = updateGiftReceiptStatus();
+
+	if ('True' === 'True')
+		giftWrapOptions = updateGiftWrapStatus();
+
+	var giftOptions = Object.assign({}, giftMessageOptions, giftWrapOptions, giftReceiptOptions);
+	submitCartUpdates(giftOptions);
+	if (previousOptions !== null) {
+		previousOptions = JSON.parse(previousOptions);
+		if (previousOptions["effectiveAppsEgwGiftWrap"] !== giftOptions["effectiveAppsEgwGiftWrap"]) {
+			window.effectiveAppsEGWGWStatusChanged = true;
+		}
+	} else if (giftOptions["effectiveAppsEgwGiftWrap"] === true) {
+		window.effectiveAppsEGWGWStatusChanged = true;
+	}
+
+	setLsWithExpiry("effective_apps_egw_options_LS", JSON.stringify(giftOptions), 600000);
+}
+
+function updateGiftMessageStatus() {
+	var giftMessageStatus = document.getElementById('effectiveAppsEgwGiftMessage').checked;
+	var giftMessageText = document.getElementById('effectiveAppsEgwGiftMessageText').value;
+	if (giftMessageText.length < 1 && giftMessageStatus === true) {
+		document.getElementById('effectiveAppsEgwGiftMessageText').style.outline = "none !important";
+		document.getElementById('effectiveAppsEgwGiftMessageText').style.border = "1px solid red";
+		throw "Empty Gift Message Text!";
+	} else {
+		document.getElementById('effectiveAppsEgwGiftMessageText').style.border = "1px solid";
+	}
+
+	if (window.effectiveAppsEGWGMStatus !== giftMessageStatus) {
+		if (giftMessageStatus === true) {
+			window.effectiveAppsEGWGMStatus = true;
+			window.effectiveAppsEGWGMLastAction = 'add';
+		} else {
+			window.effectiveAppsEGWGMStatus = false;
+			window.effectiveAppsEGWGMLastAction = 'remove';
+		}
+	}
+
+	return {
+		"effectiveAppsEgwGiftMessage": giftMessageStatus,
+		"effectiveAppsEgwGiftMessageText": giftMessageText
+	};
+}
+
+function updateGiftReceiptStatus() {
+	var giftReceiptStatus = document.getElementById('effectiveAppsEgwGiftReceipt').checked;
+	if (window.effectiveAppsEGWGRStatus !== giftReceiptStatus) {
+		if (giftReceiptStatus === true) {
+			window.effectiveAppsEGWGRStatus = true;
+		} else {
+			window.effectiveAppsEGWGRStatus = false;
+		}
+	}
+
+	return {
+		"effectiveAppsEgwGiftReceipt": giftReceiptStatus
+	};
+}
+
+function updateGiftWrapStatus() {
+    var selectedGiftWrapOptionVariantId = null;
+    if (window.effectiveAppsGwOptions["gift_wrap_options"].length > 1) {
+        selectedGiftWrapOptionVariantId = jQuery("input[name=effective_apps_gw_option]:checked").val();
+    }
+
+	var giftWrapStatus = document.getElementById('effectiveAppsEgwGiftWrap').checked;
+	if (giftWrapStatus !== window.effectiveAppsEGWGWStatus) {
+		if (giftWrapStatus === true) {
+			window.effectiveAppsEGWGWStatus = true;
+			window.effectiveAppsEGWGWLastAction = 'add';
+		} else {
+			window.effectiveAppsEGWGWStatus = false;
+			window.effectiveAppsEGWGWLastAction = 'remove';
+		}
+	}
+
+    if (selectedGiftWrapOptionVariantId !== null) {
+        if (selectedGiftWrapOptionVariantId !== window.effectiveAppsSelectedGwVariantId) {
+            window.effectiveAppsEGWGWLastAction = 'add';
+        }
+
+        return {
+            "effectiveAppsEgwGiftWrap": giftWrapStatus,
+            "effectiveAppsEgwGiftWrapSelectedVariantId": selectedGiftWrapOptionVariantId
+        };
+	}
+	else {
+        return {
+            "effectiveAppsEgwGiftWrap": giftWrapStatus
+        };
+	}
+}
+
+function updateRemainingCharacters() {
+	document.getElementById('effectiveAppsEgwGiftMessageText').style.border = "1px solid";
+	window.effectiveAppsEGWGMStatus = undefined;
+	var remainingCharactersElement = document.getElementById('effectiveAppsEgwGiftMessageRC');
+	var remainingCharacters = parseInt(document.getElementById('effectiveAppsEgwGiftMessageText').maxLength) - parseInt(document.getElementById('effectiveAppsEgwGiftMessageText').textLength);
+	remainingCharactersElement.innerText = `Remaining characters: ` + remainingCharacters.toString();
+}
+
+function setLsWithExpiry(key, value, ttl) {
+    value = value.toString();
+	const now = new Date()
+	const item = {
+		value: value,
+		expiry: now.getTime() + ttl,
+	}
+	localStorage.setItem(key, JSON.stringify(item))
+}
+
+function getLsWithExpiry(key) {
+	const itemStr = localStorage.getItem(key)
+	if (!itemStr) {
+		return null
+	}
+
+	const item = JSON.parse(itemStr)
+	const now = new Date()
+	if (now.getTime() > item.expiry) {
+		localStorage.removeItem(key)
+		return null
+	}
+
+	return item.value.toString();
+}
+
+//
+function runLogic() {
+    try {
+        var modalCancelButtonColorCSS = '';
+        if (navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) ||
+            navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) ||
+            navigator.userAgent.match(/Windows Phone/i)) {
+            window.EFFECTIVE_APPS_EGW_IS_MOBILE = true;
+            modalCancelButtonColorCSS = '.effective-apps-egw-gw-swatch{opacity:.8;width:40px;height:40px;background-position:center center;background-size: cover;background-color:gray;display:inline-block !important;margin:10px}.effective-apps-egw-gw-swatch:hover{opacity:1}.radio-img>input{display:none}.radio-img>.effective-apps-egw-gw-swatch{cursor:pointer;border:2px solid #000}.radio-img>input:checked+.effective-apps-egw-gw-swatch{border:2px solid green} .tingle-modal__close { background-color: #3498DB !important; } .tingle-modal-box { overflow-y: auto; height: 100% !important; background-color: #FFFFFF !important; } #effectiveAppsEgwGiftMessageRC { width: 100%; }';
+        } else {
+            window.EFFECTIVE_APPS_EGW_IS_MOBILE = false;
+            modalCancelButtonColorCSS = '.effective-apps-egw-gw-swatch{opacity:.8;width:40px;height:40px;background-position:center center;background-size: cover;background-color:gray;display:inline-block !important;margin:10px}.effective-apps-egw-gw-swatch:hover{opacity:1}.radio-img>input{display:none}.radio-img>.effective-apps-egw-gw-swatch{cursor:pointer;border:2px solid #000}.radio-img>input:checked+.effective-apps-egw-gw-swatch{border:2px solid green} .tingle-modal-box { border-top-left-radius: 25px !important; border-top-right-radius: 25px !important; border-bottom-left-radius: 25px !important; border-bottom-right-radius: 25px !important; } .tingle-modal-box__content { border-top-left-radius: 25px !important; border-top-right-radius: 25px !important; } .tingle-modal-box__footer { border-bottom-left-radius: 25px !important; border-bottom-right-radius: 25px !important; }';
+        }
+
+        var customModalFont = 'Default';
+        var customModalFontCss = '';
+        if (customModalFont !== '' && customModalFont.toLowerCase() !== 'default') {
+            customModalFontCss = ".tingle-modal-box h1 { font-family: " + customModalFont + " !important; } #effectiveAppsEgwGiftMessageLbl { font-family: " + customModalFont + " !important; } .smallsize { font-family: " + customModalFont + " !important; } #effectiveAppsEgwGiftMessageRC { font-family: " + customModalFont + " !important; } #effectiveAppsEgwGiftReceiptLbl { font-family: " + customModalFont + " !important; } .egwSaveGiftOptionsBtn  { font-family: " + customModalFont + " !important; } #effectiveAppsEgwGiftMessageText { font-family: " + customModalFont + " !important; } #effectiveAppsEgwGiftWrapLbl { font-family: " + customModalFont + " !important; } #effectiveAppsEgwGiftWrapPrice { font-family: " + customModalFont + " !important; }";
+        }
+
+        window.effectiveAppsGwLabelText = `Gift Wrap`;
+        window.effectiveAppsSelectedGwVariantId = '39294746722347';
+        window.effectiveAppsSelectedGmVariantId = '0';
+        var savedOptions = getLsWithExpiry("effective_apps_egw_options_LS");
+        if (savedOptions !== null) {
+            var giftOptions = JSON.parse(savedOptions);
+            if (giftOptions.hasOwnProperty("effectiveAppsEgwGiftWrapSelectedVariantId")) {
+                window.effectiveAppsSelectedGwVariantId = giftOptions["effectiveAppsEgwGiftWrapSelectedVariantId"];
+            }
+        }
+
+        window.effectiveAppsGwOptions = JSON.parse(`{"gift_wrap_options": []}`);
+        window.effectiveAppsEgwSp = '6552451055659,6550390702123,6552730959915,8920616332,8920407948,4848603889707,6721617862,4848606904363,8920773516,8920727308,4481174044715';
+        window.effectiveAppsAllowedProducts = window.effectiveAppsEgwSp.split(',');
+        jQuery('head').append('<style> ' + customModalFontCss + modalCancelButtonColorCSS +' .egwSaveGiftOptionsBtn { background-color: #3498DB !important; } .egwCancelBtn { background-color: #3498DB !important; } .egw-modal { z-index:111111111111; } .tingle-modal-box__footer { background-color: #FFFFFF !important; } .tingle-modal-box__content { background-color: #FFFFFF !important;} @keyframes effectiveAppsWiggle{0%{transform:rotate(0)}80%{transform:rotate(0)}85%{transform:rotate(5deg)}95%{transform:rotate(-5deg)}100%{transform:rotate(0)}}div.effectiveAppsWiggle{display:inline-block;animation:effectiveAppsWiggle 1.5s infinite}div.effectiveAppsWiggle:hover{animation:none} div.effectiveAppsBlink{animation:egwBlinker 1.5s step-start infinite}@keyframes egwBlinker{50%{opacity:0}} div.effectiveAppsBlink:hover{animation:none}</style><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.1/tingle.min.css">');
+        if (location.pathname.indexOf('thank_you') > -1) {
+            localStorage.removeItem('effective_apps_egw_options_LS');
+            return;
+        }
+    }
+    catch(err) {
+
+    }
+
+	String.prototype.format = function () {
+		a = this;
+		for (k in arguments) {
+			a = a.replace("{" + k + "}", arguments[k])
+		}
+		return a
+	}
+	createGiftModal();
+	attachToCart();
+}
+
+function isElementVisible(element) {
+    if (element.getAttribute('egw-override') === 'true') {
+        return true;
+    }
+
+	if (element.offsetWidth === 0 || element.offsetHeight === 0) return false;
+	var height = document.documentElement.clientHeight,
+		rects = element.getClientRects(),
+		on_top = function (r) {
+			var x = (r.left + r.right) / 2,
+				y = (r.top + r.bottom) / 2;
+			var pointElement = document.elementFromPoint(x, y);
+			var isParentVisible = (pointElement !== null && (pointElement.parentElement === element))
+			return ((pointElement === element) || (isParentVisible));
+		};
+	for (var i = 0, l = rects.length; i < l; i++) {
+		var r = rects[i],
+			in_viewport = r.top > 0 ? r.top <= height : (r.bottom > 0 && r.bottom <= height);
+		if (in_viewport && on_top(r)) return true;
+	}
+	return false;
+}
+
+function detectATCButton() {
+    var atcButtonSelectors = [
+	    'input[name="add"]:not([disabled])',
+        'button[name="add"]:not([disabled])',
+        'button[id="add"]:not([disabled])',
+        'input[id="add"]:not([disabled])',
+        'button[id="addToCart"]:not([disabled])',
+        'input[id="addToCart"]:not([disabled])',
+        'input[name="AddToCart"]:not([disabled])',
+        'button[name="AddToCart"]:not([disabled])',
+        'input[id="AddToCart"]:not([disabled])',
+        'button[id="AddToCart"]:not([disabled])',
+        '*[class*="product-form--atc-button"]:not([disabled])',
+        '*[class*="product__add-to-cart"]:not([disabled])',
+        '*[id="shopify_add_to_cart"]:not([disabled])',
+        '*[class*="product-form--add-to-cart"]:not([disabled])',
+        '*[class*="ProductForm__AddToCart"]:not([disabled])',
+        '*[class*="add-to-cart"]:not([disabled])',
+        '*[class*="addtocart"]:not([disabled])',
+        '*[class*="AddToCart"]:not([disabled])',
+        '*[data-action="add-to-cart"]:not([disabled])',
+        '*[data-add-to-cart]:not([disabled])',
+        '*[name="add"]:not([disabled])',
+        '*[id="add-to-cart"]:not([disabled])',
+        '*[data-lhi="trans_buynow"]:not([disabled])',
+        '*[class*="add_to_cart_button"]:not([disabled])'
+    ];
+
+    for (var selector of atcButtonSelectors) {
+        var elementSearchResult = document.querySelector(selector);
+        if ((elementSearchResult !== null) && (elementSearchResult.getAttribute('egw-ignore') === "true")) {
+            continue;
+        }
+
+        if (elementSearchResult !== null) {
+            return elementSearchResult;
+        }
+    }
+
+    return null;
+}
+
+function listenForCartChanges() {
+    var giftMessageProductFound = false;
+    if ('' === '') {
+        giftMessageProductFound = true;
+    }
+
+    var giftWrapProductFound = false;
+    var currentGiftOptions = JSON.parse(getLsWithExpiry("effective_apps_egw_options_LS"));
+
+    jQuery.getJSON('/cart.js').done(function(data) {
+        for (var item of data['items']) {
+            if (item["product_id"].toString() === '6552730959915') {
+                giftWrapProductFound = true;
+            }
+
+            if (item["product_id"].toString() === 'None') {
+                giftMessageProductFound = true;
+            }
+        }
+
+        if (giftMessageProductFound === false && currentGiftOptions["effectiveAppsEgwGiftMessage"] === true) {
+        	jQuery.post('/cart/update.js',{attributes: {'Gift Message': null} });
+        	currentGiftOptions["effectiveAppsEgwGiftMessage"] = false;
+        	setLsWithExpiry("effective_apps_egw_options_LS", JSON.stringify(currentGiftOptions), 600000);
+        }
+
+        if (giftWrapProductFound === false && currentGiftOptions["effectiveAppsEgwGiftWrap"] === true) {
+        	var attributesDict = {};
+        	if (window.effectiveAppsGwOptions["gift_wrap_options"].length > 1) {
+                for (var giftOption of window.effectiveAppsGwOptions["gift_wrap_options"]) {
+                    attributesDict[giftOption["gw_title"]] = null;
+                }
+            }
+            else {
+                attributesDict[window.effectiveAppsGwLabelText] = null;
+            }
+
+            jQuery.post('/cart/update.js', {attributes: attributesDict });
+        	currentGiftOptions["effectiveAppsEgwGiftWrap"] = false;
+        	if (currentGiftOptions.hasOwnProperty("effectiveAppsEgwGiftWrapSelectedVariantId")) {
+                delete currentGiftOptions["effectiveAppsEgwGiftWrapSelectedVariantId"]
+        	}
+        	setLsWithExpiry("effective_apps_egw_options_LS", JSON.stringify(currentGiftOptions), 600000);
+        }
+
+        if (false === shouldGiftOptionsCBBeTicked(currentGiftOptions)) {
+            if (document.getElementById('effectiveAppsEGWATC') !== null) {
+                document.getElementById('effectiveAppsEGWATC').checked = false;
+            }
+
+            if (document.getElementById('effectiveAppsEGW') !== null) {
+                document.getElementById('effectiveAppsEGW').checked = false;
+            }
+
+            clearInterval(window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER);
+        }
+
+	});
+}
+
+function shouldGiftOptionsCBBeTicked(currentGiftOptions=null) {
+    if (currentGiftOptions === null) {
+        currentGiftOptions = JSON.parse(getLsWithExpiry("effective_apps_egw_options_LS"));
+        if (currentGiftOptions === null) {
+            return false;
+        }
+    }
+
+    return ((currentGiftOptions.hasOwnProperty("effectiveAppsEgwGiftMessage") && currentGiftOptions["effectiveAppsEgwGiftMessage"] === true) ||
+    (currentGiftOptions.hasOwnProperty("effectiveAppsEgwGiftWrap") && currentGiftOptions["effectiveAppsEgwGiftWrap"] === true) ||
+    (currentGiftOptions.hasOwnProperty("effectiveAppsEgwGiftReceipt") && currentGiftOptions["effectiveAppsEgwGiftReceipt"] === true)
+    );
+}
+
+function detectCheckoutButton(isCartPage=false) {
+	var resultElement = null;
+	var checkoutButtonSelectors = [
+		'*[name="checkout"]:not([disabled]):not([class*="product-cart-message__checkout-button"])',
+		'*[name="goto_pp"]:not([disabled])',
+		'*[name="goto_gc"]:not([disabled])',
+		'*[value*="Checkout"]',
+		'*[value*="Check out"]',
+		'*[href*="/checkout"]:not([href*="front_end/login"])',
+		'*[onclick*="/checkout"]'
+	];
+	var cartFormSelectors = [
+		'input[type="submit"]:not([disabled])',
+		'input[type="button"]:not([disabled])'
+	];
+
+	for (var selector of checkoutButtonSelectors) {
+		var elementSearchResult = document.querySelectorAll(selector);
+		if (elementSearchResult.length > 1 && window.EGW_THEME_NAME.indexOf('dawn') === -1) {
+		    if (elementSearchResult[1].getAttribute('egw-ignore') === "true") {
+		        continue;
+		    }
+		    if (elementSearchResult[1].hasOwnProperty('href')) {
+		        if (elementSearchResult[1].getAttribute('href').indexOf("/front_end/login") > -1) {
+		            continue;
+		        }
+		    }
+
+			return elementSearchResult[1];
+		} else if (elementSearchResult.length > 0) {
+		    if (elementSearchResult[0].getAttribute('egw-ignore') === "true") {
+		        continue;
+		    }
+		    if (elementSearchResult[0].hasOwnProperty('href')) {
+		        if (elementSearchResult[0].getAttribute('href').indexOf("/front_end/login") > -1) {
+		            continue;
+		        }
+		    }
+
+            if (window.EGW_THEME_NAME.indexOf('dawn') > -1 && isCartPage === true && elementSearchResult.length > 0) {
+                return elementSearchResult[1];
+            }
+
+			return elementSearchResult[0];
+		}
+	}
+
+	var cartFormElement = document.querySelector('form[action="/cart"]');
+	if (cartFormElement !== null) {
+		for (var selector of cartFormSelectors) {
+			var element = cartFormElement.querySelector(selector);
+			if (element !== null) {
+				return element;
+			}
+		}
+	}
+
+	return null;
+}
+
+function waitForCartDrawer() {
+	if (document.getElementById('effectiveAppsEGW') !== null) {
+		return;
+	}
+
+    var atcButtonElement = null;
+    if ('True' === 'True' && location.pathname.indexOf('/products') > -1) {
+        atcButtonElement = detectATCButton();
+    }
+
+    if (atcButtonElement !== null) {
+        if (window.effectiveAppsEgwSp.length > 0) {
+            if (window.effectiveAppsAllowedProducts.indexOf(ShopifyAnalytics.meta.product.id.toString()) > -1) {
+                attachToATC(atcButtonElement);
+            }
+        }
+        else {
+            attachToATC(atcButtonElement);
+        }
+    }
+
+	var checkoutButtonElement = detectCheckoutButton();
+	if (checkoutButtonElement === null) {
+		return;
+	}
+
+	if (isElementVisible(checkoutButtonElement) === true) {
+		if (window.effectiveAppsEgwSp.length > 0) {
+            jQuery.getJSON('/cart.js').done(function(data) {
+                for (var item of data['items']) {
+                    if (window.effectiveAppsAllowedProducts.indexOf(item["product_id"].toString()) > -1) {
+                        attachToCart(true);
+                        break;
+                    }
+                }
+            });
+        }
+        else {
+            attachToCart(true);
+        }
+	}
+}
+
+function attachToATC(atcElementToAttachTo) {
+    if (document.getElementById('effectiveAppsEGWATC') !== null) {
+        return;
+    }
+	if (null === atcElementToAttachTo) {
+		return;
+	}
+
+    var insertionType = 'afterbegin';
+	var elementContainer = atcElementToAttachTo.parentElement;
+	var checkboxElement = document.createElement('p');
+	checkboxElement.innerHTML = `<div style="display: inline-block;" class=""><label style="display:inline; float:none" for="effectiveAppsEGWATC"><input style="-webkit-appearance: checkbox; float:none; vertical-align: middle;" type="checkbox" id="effectiveAppsEGWATC" name="effectiveAppsEGWATC" onchange="window.effectiveAppsEGWModal.open();"/> 🎁 Add gift options</label></div>`;
+	if (window.EGW_THEME_NAME.indexOf("brooklyn") > -1 || window.EGW_THEME_NAME.indexOf("minimal") > -1) {
+        elementContainer = atcElementToAttachTo.parentElement.parentElement;
+    }
+
+    if (window.EGW_THEME_NAME.indexOf("blockshop") > -1) {
+        elementContainer = atcElementToAttachTo.parentElement.parentElement;
+        insertionType = 'beforebegin';
+    }
+
+    if (window.EGW_THEME_NAME.indexOf("trademark") > -1) {
+        insertionType = 'beforebegin';
+    }
+
+    if (window.EGW_THEME_NAME.indexOf("simple") > -1) {
+        elementContainer = atcElementToAttachTo.parentElement;
+        checkboxElement.innerHTML = checkboxElement.innerHTML.replace('display: inline-block;', 'display: block;');
+    }
+
+	elementContainer.insertAdjacentHTML(insertionType, checkboxElement.innerHTML);
+	if (shouldGiftOptionsCBBeTicked() === true) {
+        document.getElementById('effectiveAppsEGWATC').checked = true;
+        if (window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER === undefined) {
+            window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER = setInterval(listenForCartChanges, 1000);
+        }
+    }
+    else {
+        document.getElementById('effectiveAppsEGWATC').checked = false;
+    }
+
+	window.effectiveAppsEGWSuccessfullyAttachedToATC = true;
+}
+
+function attachToCart(isCartDrawer = false) {
+    if (document.getElementById('effectiveAppsEGW') !== null) {
+        return;
+    }
+
+	var isCartPage = ShopifyAnalytics.meta.page.pageType === "cart" || location.pathname.indexOf('/cart') > -1;
+	if (isCartDrawer === false && isCartPage === false) {
+		window.EFFECTIVE_APPS_EGW_CART_LISTENER = setInterval(waitForCartDrawer, 500);
+		return;
+	}
+
+	if (window.effectiveAppsEgwSp.length > 0) {
+        jQuery.getJSON('/cart.js').done(function(data) {
+            for (var item of data['items']) {
+                if (window.effectiveAppsAllowedProducts.indexOf(item["product_id"].toString()) > -1) {
+                    attachToCartPage(isCartPage);
+                    break;
+                }
+            }
+        });
+    }
+    else {
+        attachToCartPage(isCartPage);
+    }
+}
+
+function attachToCartPage(isCartPage) {
+    var checkboxElement = document.createElement('p');
+	checkboxElement.innerHTML = `<label style="display:inline; float:none" for="effectiveAppsEGW"><input style="-webkit-appearance: checkbox; float:none; vertical-align: middle;" type="checkbox" id="effectiveAppsEGW" name="effectiveAppsEGW" onchange="window.effectiveAppsEGWModal.open();"/> 🎁 Add gift options</label>`;
+    if ('' !== '' && '' !== 'openModal') {
+        checkboxElement.innerHTML = '<div class="">' + checkboxElement.innerHTML + '</div>';
+    }
+	var checkoutButtonElement = detectCheckoutButton(isCartPage);
+	if (null === checkoutButtonElement) {
+		return;
+	}
+
+	let elementContainer = checkoutButtonElement.parentElement;
+	if (window.EGW_THEME_NAME.indexOf('debut') > -1 || window.EGW_THEME_NAME.indexOf('express') > -1) {
+		elementContainer = checkoutButtonElement.parentElement.parentElement;
+	}
+
+	if (window.EGW_THEME_NAME.indexOf('dawn') > -1) {
+        elementContainer = checkoutButtonElement.parentElement.parentElement;
+        if (isCartPage === true) {
+            checkboxElement.innerHTML = '<div style="text-align: right;">' + checkboxElement.innerHTML + '</div>';
+        }
+    }
+
+    if (window.EGW_THEME_NAME.indexOf('maker') > -1) {
+        elementContainer = checkoutButtonElement.parentElement.parentElement;
+        checkboxElement.innerHTML = '<div style="width: 100%;">' + checkboxElement.innerHTML + '</div>';
+    }
+
+    if (document.getElementById('effectiveAppsEGW') !== null && document.getElementById('effectiveAppsEGW') !== undefined) {
+        return;
+    }
+
+	elementContainer.innerHTML = checkboxElement.innerHTML + elementContainer.innerHTML;
+	if (shouldGiftOptionsCBBeTicked() === true) {
+        document.getElementById('effectiveAppsEGW').checked = true;
+        if (window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER === undefined) {
+            window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER = setInterval(listenForCartChanges, 1000);
+        }
+    }
+    else {
+        document.getElementById('effectiveAppsEGW').checked = false;
+    }
+
+	if ('' === 'openModal' && location.pathname.indexOf('/cart') > -1 && shouldGiftOptionsCBBeTicked() === false) {
+	    document.getElementById('effectiveAppsEGW').click();
+    }
+
+	window.effectiveAppsEGWSuccessfullyAttachedToCart = true;
+}
+
+function toggleSideCartOverlay(eventType='openModal') {
+    try {
+        if (eventType === 'openModal') {
+            document.querySelectorAll('[class*="tingle-modal"]')[0].setAttribute('style', 'z-index: 111111111111;');
+            if (window.EGW_THEME_NAME.indexOf("brooklyn") > -1 && typeof timber !== 'undefined' && window.effectiveAppsEGWSuccessfullyAttachedToATC !== true) {
+                timber.RightDrawer.close(new Event(1));
+            }
+            else if (window.EGW_THEME_NAME.indexOf("express") > -1 || window.EGW_THEME_NAME.indexOf("prestige") > -1 || window.EGW_THEME_NAME.indexOf("debutify") > -1) {
+                for (var i=0; i < 10; i++) {
+                    try {
+                        document.querySelector('[tabindex="-1"]').setAttribute('tabindex', '');
+                    }
+                    catch (err) {
+                        break;
+                    }
+                }
+            }
+            else if (document.body.getAttribute('class').indexOf('js-drawer-open-right') > -1) {
+                document.body.setAttribute('class', document.body.getAttribute('class').replace('js-drawer-open-right', ''));
+                window.RecoverBodyJsDrawerCartNeeded = true;
+            }
+
+            if (document.getElementsByTagName('html')[0].getAttribute('class').indexOf('js-drawer-open-right') > -1) {
+                document.getElementsByTagName('html')[0].setAttribute('class', document.getElementsByTagName('html')[0].getAttribute('class').replace('js-drawer-open-right', ''));
+                window.RecoverHeadJsDrawerCartNeeded = true;
+            }
+
+            if (document.querySelector('[class*=mfp-wrap]') !== null) {
+                if (document.querySelector('[class*=mfp-wrap]').getAttribute("tabindex") !== null) {
+                    window.RecoverDrawerCartTabIndex = document.querySelector('[class*=mfp-wrap]').getAttribute("tabindex");
+                    document.querySelector('[class*=mfp-wrap]').setAttribute("tabindex", '');
+                }
+            }
+
+            if (document.getElementById("CartDrawer") !== null) {
+                if (document.getElementById("CartDrawer").getAttribute("tabindex") !== null) {
+                    window.RecoverDrawerCartTabIndex2 = document.getElementById("CartDrawer").getAttribute("tabindex");
+                    document.getElementById("CartDrawer").setAttribute("tabindex", '');
+                }
+            }
+
+            if (document.querySelector("[data-section-id='cart-drawer']") !== null) {
+                if (document.querySelector("[data-section-id='cart-drawer']").getAttribute("tabindex") !== null) {
+                    window.RecoverDrawerCartTabIndex3 = document.querySelector("[data-section-id='cart-drawer']").getAttribute("tabindex");
+                    document.querySelector("[data-section-id='cart-drawer']").setAttribute("tabindex", '');
+                }
+            }
+
+            if (document.querySelector("[class*='drawer--visible']") !== null) {
+                document.querySelector("[class*='drawer--visible']").setAttribute("recover-drawer-visibility-4", 'true');
+                window.RecoverDrawerCart4 = true;
+                document.querySelector("[class*='drawer--visible']").classList.remove('drawer--visible');
+            }
+        }
+        else {
+            if (window.EGW_THEME_NAME.indexOf("brooklyn") > -1 && typeof timber !== 'undefined' && window.effectiveAppsEGWSuccessfullyAttachedToATC !== true && location.pathname.indexOf('cart') === -1) {
+                timber.RightDrawer.open();
+            }
+            else if (window.RecoverBodyJsDrawerCartNeeded === true) {
+                document.body.setAttribute('class', document.body.getAttribute('class') + ' js-drawer-open-right');
+                window.RecoverBodyJsDrawerCartNeeded = false;
+            }
+
+            if (window.RecoverHeadJsDrawerCartNeeded === true) {
+                document.getElementsByTagName('html')[0].setAttribute('class', document.getElementsByTagName('html')[0].getAttribute('class') + ' js-drawer-open-right');
+                window.RecoverHeadJsDrawerCartNeeded = false;
+            }
+
+            if (window.RecoverDrawerCartTabIndex !== undefined) {
+                document.querySelector('[class*=mfp-wrap]').setAttribute("tabindex", window.RecoverDrawerCartTabIndex);
+                window.RecoverDrawerCartTabIndex = undefined;
+            }
+
+            if (window.RecoverDrawerCartTabIndex2 !== undefined) {
+                document.getElementById("CartDrawer").setAttribute("tabindex", window.RecoverDrawerCartTabIndex2);
+                window.RecoverDrawerCartTabIndex2 = undefined;
+            }
+
+            if (window.RecoverDrawerCartTabIndex3 !== undefined) {
+                document.querySelector("[data-section-id='cart-drawer']").setAttribute("tabindex", window.RecoverDrawerCartTabIndex3);
+                window.RecoverDrawerCartTabIndex3 = undefined;
+            }
+
+            if (window.RecoverDrawerCart4 !== undefined) {
+                document.querySelector("[recover-drawer-visibility-4='true']").classList.add('drawer--visible');
+            }
+        }
+    }
+    catch (err) {
+
+    }
+}
+
+// ---- cart options ----
+
+function submitCartUpdates(giftOptions) {
+    var attributesUpdates = {};
+    var quantityUpdates = {};
+    var quantityUpdatesItems = [];
+
+    if ('True' === 'True') {
+        if (giftOptions.hasOwnProperty('effectiveAppsEgwGiftMessage') && giftOptions['effectiveAppsEgwGiftMessage'] === true) {
+            attributesUpdates['Gift Message'] = giftOptions['effectiveAppsEgwGiftMessageText'];
+            if (parseFloat('0.0') > 0 && window.effectiveAppsSelectedGmVariantId.length > 1) {
+                quantityUpdates[parseInt(window.effectiveAppsSelectedGmVariantId)] = 1;
+                quantityUpdatesItems.push(parseInt(window.effectiveAppsSelectedGmVariantId));
+            }
+        }
+        else {
+            attributesUpdates['Gift Message'] = null;
+            if (window.effectiveAppsSelectedGmVariantId.length > 1) {
+                quantityUpdates[parseInt(window.effectiveAppsSelectedGmVariantId)] = 0;
+            }
+        }
+    }
+
+    if ('True' === 'True') {
+        if (giftOptions.hasOwnProperty('effectiveAppsEgwGiftReceipt') && giftOptions['effectiveAppsEgwGiftReceipt'] === true) {
+            attributesUpdates['Gift Receipt'] = "YES";
+        }
+        else {
+            attributesUpdates['Gift Receipt'] = null;
+        }
+    }
+
+    if ('True' === 'True') {
+        if (giftOptions.hasOwnProperty('effectiveAppsEgwGiftWrap') && giftOptions['effectiveAppsEgwGiftWrap'] === true) {
+            if (window.effectiveAppsGwOptions["gift_wrap_options"].length > 1) {
+                for (var giftOption of window.effectiveAppsGwOptions["gift_wrap_options"]) {
+                    if (giftOptions["effectiveAppsEgwGiftWrapSelectedVariantId"] === giftOption["gw_variant_id"]) {
+                        attributesUpdates[giftOption["gw_title"]] = "YES";
+                        quantityUpdates[parseInt(giftOptions["effectiveAppsEgwGiftWrapSelectedVariantId"])] = 1;
+                        quantityUpdatesItems.push(parseInt(giftOptions["effectiveAppsEgwGiftWrapSelectedVariantId"]));
+                    }
+                    else {
+                        quantityUpdates[parseInt(giftOption["gw_variant_id"])] = 0;
+                        attributesUpdates[giftOption["gw_title"]] = null;
+                    }
+                }
+            }
+            else {
+                attributesUpdates[window.effectiveAppsGwLabelText] = "YES";
+                quantityUpdates[parseInt(window.effectiveAppsSelectedGwVariantId)] = 1;
+                quantityUpdatesItems.push(parseInt(window.effectiveAppsSelectedGwVariantId));
+            }
+        }
+        else {
+            attributesUpdates[window.effectiveAppsGwLabelText] = null;
+            if (window.effectiveAppsGwOptions["gift_wrap_options"].length > 1) {
+                for (var giftOption of window.effectiveAppsGwOptions["gift_wrap_options"]) {
+                    attributesUpdates[giftOption["gw_title"]] = null;
+                    quantityUpdates[parseInt(giftOption["gw_variant_id"])] = 0;
+                }
+            }
+            else {
+                attributesUpdates[window.effectiveAppsGwLabelText] = null;
+                if ('39294746722347'.length > 1) {
+                    quantityUpdates[parseInt(window.effectiveAppsSelectedGwVariantId)] = 0;
+                }
+            }
+        }
+    }
+
+    jQuery.post('/cart/update.js',
+                {
+                    attributes: attributesUpdates,
+                    updates: quantityUpdates
+                }
+    ).always(function() {
+        var didAttributesApplied = true;
+        var itemsList = [];
+        jQuery.getJSON('/cart.js').done(function(data) {
+            for (var attribute in attributesUpdates) {
+                if (attributesUpdates[attribute] !== null && data['attributes'][attribute] !== attributesUpdates[attribute]) {
+                    didAttributesApplied = false;
+                    break;
+                }
+            }
+            for (var item in data['items']) {
+                itemsList.push(data['items'][item]['id']);
+            }
+
+            if (didAttributesApplied === false || arraysComparison(quantityUpdatesItems, itemsList) === false) {
+                submitCartUpdates(giftOptions)
+            }
+            else {
+                if (window.effectiveAppsEGWGWLastAction !== undefined || (window.effectiveAppsEGWGMLastAction !== undefined && parseFloat('0.0') > 0) ) {
+                    location.reload();
+                }
+            }
+        });
+    });
+}
+
+function arraysComparison(arr, arr2){
+  return arr.every(i => arr2.includes(i));
+}
+
+function encode(r) {
+  return r.replace(/[\x26\x0A\x3c\x3e\x22\x27]/g, function(r) {
+    return "&#" + r.charCodeAt(0) + ";";
+  });
+}
+
+/// ------
+function createGiftModal() {
+	window.effectiveAppsEGWModal = new tingle.modal({
+		footer: !window.EFFECTIVE_APPS_EGW_IS_MOBILE,
+		closeMethods: ['overlay', 'button', 'escape'],
+		closeLabel: `Save gift options`,
+		cssClass: ['egw-modal'],
+		onOpen: function () {
+			toggleSideCartOverlay('openModal');
+			modalOnLoad();
+		},
+		beforeClose: function() {
+		    try {
+                validateAndSaveGiftOptions();
+                return true;
+            }
+            catch (err) {
+                return false;
+            }
+        },
+		onClose: function () {
+			toggleSideCartOverlay('closeModal');
+			if (window.effectiveAppsEGWGMStatus === true || window.effectiveAppsEGWGRStatus === true || window.effectiveAppsEGWGWStatus === true) {
+				if (document.getElementById('effectiveAppsEGW') !== null) {
+				    document.getElementById('effectiveAppsEGW').checked = true;
+                }
+                if (document.getElementById('effectiveAppsEGWATC') !== null) {
+				    document.getElementById('effectiveAppsEGWATC').checked = true;
+                }
+
+                if (window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER === undefined) {
+                    window.EFFECTIVE_APPS_EGW_CART_CHANGE_LISTENER = setInterval(listenForCartChanges, 1000);
+                }
+			} else {
+				if (document.getElementById('effectiveAppsEGW') !== null) {
+				    document.getElementById('effectiveAppsEGW').checked = false;
+                }
+                if (document.getElementById('effectiveAppsEGWATC') !== null) {
+				    document.getElementById('effectiveAppsEGWATC').checked = false;
+                }
+			}
+		}
+	});
+	var giftMessageHtml = `<div class="effective-apps-egw-modal minispacing"> <div class="sectioned leftlabel bold declaration"> <div class="minispacing"><label for="effectiveAppsEgwGiftMessage" class="bold"><input class="effective-apps-egw-cb" id="effectiveAppsEgwGiftMessage" name="effectiveAppsEgwGiftMessage" style="-webkit-appearance: checkbox; display: inline-block;" type="checkbox"> <span class="checkbox-text"> <span id="effectiveAppsEgwGiftMessageLbl">Valentina Agency Gift.</span><br/><span class="smallsize shade-color" style="white-space: nowrap;">Your gift free</span> </span></label> </div></div></div><textarea tabindex="-1" onclick="if (false === document.getElementById('effectiveAppsEgwGiftMessage').checked) { document.getElementById('effectiveAppsEgwGiftMessage').checked = true; }" onkeyup="updateRemainingCharacters();" class="effective-apps-gm-textarea" maxlength="250" name="effectiveAppsEgwGiftMessageText" id="effectiveAppsEgwGiftMessageText" placeholder="Your gift earned" rows="4"></textarea> <div id="effectiveAppsEgwGiftMessageRC" name="effectiveAppsEgwGiftMessageRC" class="sectionedcolumn sectioned righttext endingspan smallsize shade-color">Remaining characters: 250 </div>`;
+	var giftWrapHtml = `<label for="effectiveAppsEgwGiftWrap" class="bold"><input class="effective-apps-egw-cb" id="effectiveAppsEgwGiftWrap" name="effectiveAppsEgwGiftWrap" style="-webkit-appearance: checkbox; display: inline-block;" type="checkbox"> <span class="checkbox-text"> <span id="effectiveAppsEgwGiftWrapLbl">Gift Wrap</span><br/><span class="smallsize shade-color">Enjoy this Beautiful Gift</span> </span></label>`;
+    if (window.effectiveAppsGwOptions["gift_wrap_options"].length > 1) {
+        var giftOptionsHtml = "";
+        var isFirst = true;
+        var firstGwTitle = "", firstGwPrice = "", firstGwExp = "";
+        for (var giftOption of window.effectiveAppsGwOptions["gift_wrap_options"]) {
+            var gw_title = giftOption["gw_title"];
+            var gw_price = giftOption["gw_price"];
+            var gw_explanation = giftOption["gw_explanation"];
+            var gw_variant_id = giftOption["gw_variant_id"];
+            var gw_img = giftOption["gw_img"];
+            var firstSelected = "";
+            if (isFirst === true) {
+                firstGwTitle = gw_title;
+                firstGwPrice = " - USD" + gw_price.toString();
+                if (parseFloat(gw_price) === 0) {
+                    firstGwPrice = "";
+                }
+                firstGwExp = gw_explanation;
+                var firstSelected = "checked";
+                isFirst = false;
+            }
+
+            giftOptionsHtml += '<label gw-variant-id='+ gw_variant_id +' style="display: inline-block !important;" class="radio-img"><input ' + firstSelected + ' type="radio" onclick="selectGwOption(`' + gw_variant_id + '`, `' + gw_img + '`, `' + encode(gw_title) +'`, `' + gw_price + '`, `'+ encode(gw_explanation) + '`)" name="effective_apps_gw_option" value="' + gw_variant_id + '"><div class="effective-apps-egw-gw-swatch" style="background-image: url(' + gw_img + ')"></div></label>';
+        }
+
+        giftWrapHtml = '<label for="effectiveAppsEgwGiftWrap" class="bold"><input class="effective-apps-egw-cb" id="effectiveAppsEgwGiftWrap" name="effectiveAppsEgwGiftWrap" style="-webkit-appearance: checkbox; display: inline-block;" type="checkbox"> <span class="checkbox-text"> <span id="effectiveAppsEgwGiftWrapLbl">' + firstGwTitle + '</span><span id="effectiveAppsEgwGiftWrapPrice">' + firstGwPrice + '</span><br/><span class="smallsize shade-color" id="effectiveAppsEgwGiftWrapExp">' + firstGwExp + '</span><div>' + giftOptionsHtml+ '</div></span></label>';
+    }
+	var giftReceiptHtml = `<span class="bold declaration"> <div class="minispacing"><label for="effectiveAppsEgwGiftReceipt" class="bold"><input class="effective-apps-egw-cb" id="effectiveAppsEgwGiftReceipt" name="effectiveAppsEgwGiftReceipt" style="-webkit-appearance: checkbox; display: inline-block;" type="checkbox"> <span class="checkbox-text"> <span id="effectiveAppsEgwGiftReceiptLbl">Gift Receipt</span> <br/><span class="smallsize shade-color">Hide prices from the receipt</span> </span></label> </div></span>`;
+	var sectioned = "sectioned";
+	var sectionedColumn = "sectionedcolumn";
+	var sectionedStyle = "";
+	if (window.EFFECTIVE_APPS_EGW_IS_MOBILE === true) {
+		sectioned = "";
+		sectionedColumn = "";
+		sectionedStyle = 'style="padding-top: 15px;"';
+	}
+	var firstSection = '<div class="' + sectioned + '"><div class="innersection topminispacing">{0}</div></div>';
+	var secondSection = '<div ' + sectionedStyle + ' class="' + sectionedColumn + ' ' + sectioned + ' endingspan"> <div class="innersection minispacing topminispacing"> <span class="bold declaration"> <div class="minispacing"> {0} <div> <img id="effectiveAppsEgwModalImage" width="333" height="190" src="https://cdn.shopify.com/s/files/1/1337/6727/t/1/assets/mas_hermosa_gift_card.jpg?v=1617592183" style="object-fit: contain;"> </div></div></span> </div></div>';
+
+	if ('True' === 'True') {
+		firstSection = firstSection.format(giftMessageHtml);
+		if ('True' === 'True' && 'True' === 'False') {
+			secondSection = secondSection.format(giftReceiptHtml);
+		} else if ('True' === 'False' && 'True' === 'True') {
+			secondSection = secondSection.format(giftWrapHtml);
+		} else if ('True' === 'True' && 'True' === 'True') {
+			secondSection = secondSection.format(giftReceiptHtml + giftWrapHtml);
+		} else {
+			secondSection = secondSection.format('');
+		}
+	} else if ('True' === 'True' && 'True' === 'False') {
+		firstSection = firstSection.format(giftWrapHtml);
+		secondSection = secondSection.format('');
+	} else if ('True' === 'False' && 'True' === 'True') {
+		firstSection = firstSection.format(giftReceiptHtml);
+		secondSection = secondSection.format('');
+	} else if ('True' === 'True' && 'True' === 'True') {
+		firstSection = firstSection.format(giftReceiptHtml + giftWrapHtml);
+		secondSection = secondSection.format('');
+	}
+
+	var modalContentHtml = `<style>.effective-apps-gm-textarea{background-color: white; -moz-user-select: text; -webkit-user-select: text; -ms-user-select: text;background-color: "white"; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; font-family: Arial, sans-serif; font-size: 13px; border: 1px solid; -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 1px 0 rgba(0, 0, 0, .07) inset; -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 1px 0 rgba(0, 0, 0, .07) inset; box-shadow: 0 1px 0 rgba(255, 255, 255, .5), 0 1px 0 rgba(0, 0, 0, .07) inset; outline: 0; outline-width: 0; height: auto; width: 100%; padding: 5px 7px; resize: vertical}.effective-apps-gm-textarea:focus{border-color: blue; -webkit-box-shadow: 0 0 3px rgba(228, 121, 17, .5), 0 1px 0 rgba(0, 0, 0, .07) inset; -moz-box-shadow: 0 0 3px rgba(228, 121, 17, .5), 0 1px 0 rgba(0, 0, 0, .07) inset; box-shadow: 0 0 3px rgba(228, 121, 17, .5), 0 1px 0 rgba(0, 0, 0, .07) inset}.effective-apps-gm-textarea:-webkit-input-placeholder{color: #888}.effective-apps-gm-textarea:-moz-placeholder{color: #888}.effective-apps-gm-textarea:-ms-input-placeholder{color: #888}.effective-apps-egw-cb{margin: 0; padding: 0; height: 13px; width: 13px; vertical-align: bottom; position: relative; top: 0; overflow: hidden}.effective-apps-egw-modal{width: 100%; font-size: 13px; line-height: 19px; color: #333; font-family: Arial, sans-serif; padding: 0; margin: 0; background-color="#000000"}.effective-apps-egw-modal:after, .effective-apps-egw-modal:before{display: table; content: ""; line-height: 0; font-size: 0}.effective-apps-egw-modal:after{clear: both}.effective-apps-egw-modal{float: right!important; margin-left: 2.53165%!important; margin-right: 0!important}.effective-apps-egw-modal .sectioned, .x-ws .effective-apps-egw-modal .x-ws-span6{width: 48.68608%}td.sectioned, th.sectioned{width: 52.43%; float: none!important}.effective-apps-egw-modal .sectioned div.sectioned{width: 47.29757%}td.sectioned{float: none; margin-right: 0}div.sectioned{margin-right: 2.53165%; float: left; _float: left!important; min-height: 1px; overflow: visible}.innersection{margin-bottom: 22px}.innersection:last-child{margin-bottom: 0}.topminispacing{margin-top: 6px!important}hr.topminispacing{padding-top: 6px; margin-top: 0!important}.bold{font-weight: 700!important}.sectionedcolumn.endingspan{margin-right: 0; float: right}.smallsize{font-size: 11px; line-height: 1.465}.shade-color{color: #888}.minispacing{margin-bottom: 6px!important}.leftlabel{text-align: left!important}.sectionedcolumn.endingspan{margin-right: 0; float: right}.bold{font-weight: 700!important}.righttext{text-align: right!important}.declaration form{margin-bottom: 9px}.declaration:last-child form:last-child{margin-bottom: 0}label .checkbox-text{position: relative; top: 3px; left: 5px}@-moz-document url-prefix(){label .checkbox-text{top: 4px}}.smallsize{font-size: 12px; line-height: 1.5}</style><h1>Gift Options</h1> <div class="effective-apps-egw-modal"> ` + firstSection + secondSection + '</div>';
+	window.effectiveAppsEGWModal.setContent(modalContentHtml);
+	if (false === window.EFFECTIVE_APPS_EGW_IS_MOBILE) {
+        window.effectiveAppsEGWModal.addFooterBtn(`Save gift options`, 'tingle-btn tingle-btn--primary egwSaveGiftOptionsBtn', function () {
+            window.effectiveAppsEGWModal.close();
+        });
+	}
+}
+
+function selectGwOption(gwVariantId, gwImg, gwTitle, gwPrice, gwExplanation) {
+    document.getElementById('effectiveAppsEgwGiftWrapLbl').innerText = gwTitle;
+    document.getElementById('effectiveAppsEgwGiftWrapExp').innerText = gwExplanation;
+    if (gwImg !== '' && gwImg !== undefined) {
+        document.getElementById('effectiveAppsEgwModalImage').src = gwImg;
+    }
+    document.getElementById('effectiveAppsEgwGiftWrap').checked = true;
+    if (parseFloat(gwPrice) === 0) {
+        gwPrice = "";
+    }
+    else {
+        gwPrice = " - USD" + gwPrice.toString();
+    }
+
+    document.getElementById('effectiveAppsEgwGiftWrapPrice').innerText = gwPrice;
+}
+
+function loadScript(url, success) {
+	var script = document.createElement('script');
+	script.src = url;
+	var head = document.getElementsByTagName('head')[0],
+		done = false;
+	head.appendChild(script);
+	script.onload = script.onreadystatechange = function () {
+		if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
+			done = true;
+			success();
+			script.onload = script.onreadystatechange = null;
+			head.removeChild(script);
+		}
+	};
+}
+
+function getShopifyThemeName() {
+    try {
+        if (window.BOOMR !== undefined && window.BOOMR.themeName !== undefined && window.BOOMR.themeName.length > 0) {
+            return window.BOOMR.themeName.toLowerCase();
+        }
+        else {
+            return Shopify.theme.name.toLowerCase();
+        }
+    }
+    catch (err) {
+        return "";
+    }
+}
+
+function main() {
+    console.log('%c------ Super Gift Options by Effective Apps is Initializing (Regular) ------', 'color: cyan');
+    console.log('%c------ Contact us at support@effectify.co for help and questions about the app ------', 'color: cyan');
+    window.EGW_THEME_NAME = getShopifyThemeName();
+	if (window.EGW_SCRIPT_INJECTED === undefined) {
+	    window.EGW_SCRIPT_INJECTED = true;
+		if (typeof jQuery === 'undefined') {
+            loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js',
+                function () {
+                    loadScript("https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.1/tingle.min.js", runLogic);
+                });
+        }
+        else {
+            loadScript("https://cdnjs.cloudflare.com/ajax/libs/tingle/0.15.1/tingle.min.js", runLogic);
+        }
+	}
+}
+
+main();
