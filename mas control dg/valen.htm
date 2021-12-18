@@ -1,0 +1,3007 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/ -->
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" style="height: 100%; "><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+
+
+		
+		<title>Habian visto estas de Macri Velez?? - MYMDQUEENS Reinas de Belleza Internacional</title>
+		<link rel="shortcut icon" href="http://mymdqueens.com/favicon.ico">
+		<link rel="image_src" href="http://mymdqueens.com/public/style_images/mymdqueens_images/meta_image.png">
+		<script src="./valen_files/cb=gapi.loaded_0" async=""></script><script type="text/javascript" async="" src="./valen_files/ga.js"></script><script type="text/javascript">
+		//<![CDATA[
+			jsDebug			= 0; /* Must come before JS includes */
+			USE_RTE			= 0;
+			DISABLE_AJAX	= parseInt(0); /* Disables ajax requests where text is sent to the DB; helpful for charset issues */
+			inACP			= false;
+			var isRTL		= false;
+			var rtlIe		= '';
+			var rtlFull		= '';
+		//]]>
+		</script>
+		
+	
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+
+				
+	
+	
+		<link rel="stylesheet" type="text/css" media="screen,print" href="./valen_files/index.php">
+	
+
+<!--[if lte IE 7]>
+	<link rel="stylesheet" type="text/css" title='Main' media="screen" href="http://mymdqueens.com/public/style_css/css_52/ipb_ie.css" />
+<![endif]-->
+<!--[if lte IE 8]>
+	<style type='text/css'>
+		.ipb_table { table-layout: fixed; }
+		.ipsLayout_content { width: 99.5%; }
+	</style>
+<![endif]-->
+
+	<!-- Forces resized images to an admin-defined size -->
+	<style type="text/css">
+		img.bbc_img {
+			max-width: 400px !important;
+			max-height: 400px !important;
+		}
+	</style>
+
+	
+		<meta name="keywords" content="Habian,visto,estas,Macri,Velez??,DEMASIADOOOOOOOOOOO,DIOSAAAAA">
+		
+	
+
+		<meta name="description" content="        DEMASIADOOOOOOOOOOO DIOSAAAAA!! ">
+		
+	
+
+		<meta name="identifier-url" content="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/">
+		
+			<meta name="og:url" content="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/">
+		
+	
+
+		<meta property="og:title" content="Habian visto estas de Macri Velez??">
+		<meta property="og:site_name" content="MYMDQUEENS Reinas de Belleza Internacional">
+		<meta property="og:image" content="http://mymdqueens.com/public/style_images/mymdqueens_images/meta_image.png">
+		<meta property="og:type" content="article">
+		
+		
+		
+		<script type="text/javascript" src="./valen_files/index(1).php"></script>
+	
+	<script type="text/javascript" src="./valen_files/index(2).php" charset="UTF-8"></script><script type="text/javascript">
+
+ipb.lang['en30_thanked_by'] 	= "Thanked by";
+ipb.lang['en30_thank']		= "Thanks";
+ipb.lang['en30_thank_author']	= "Thank the author of this post";
+ipb.lang['en30_user']		= "Member:";
+ipb.lang['en30_users']		= "Members:";
+ipb.lang['en30_thanked']	= "Thanked";
+
+function ajaxThanksExpand( pid )
+{
+	var thankersBox 		= $( 'thankers_' + pid );
+	var showThankers 	= $( 'show_thankers_' + pid );
+	
+	showThankers.style.display = "none";
+	thankersBox.style.display = "block";
+}
+
+function ajaxRemoveThanks( pid )
+{
+		// Kill the thanks button of this specific post
+		
+		new Effect.DropOut( 'ajaxRemoveThanks_' + pid );
+		var url = ipb.vars['base_url'] + 'app=forums&module=ajax&section=stats&do=ajaxRemoveThanks';
+		
+		new Ajax.Request( url,
+							{
+								method: 'post',
+								evalJSON: 'force',
+								parameters: {
+									md5check: 		ipb.vars['secure_hash'],
+									pid:			pid,
+									tid:			ipb.topic.topic_id,
+									fid:			ipb.topic.forum_id
+								},
+								onSuccess: function(t)
+								{
+									if( t.responseJSON['error'] )
+									{
+										alert( t.responseJSON['error'] );
+									}
+									else
+									{
+										var thankers	= $( 'thankers_' + pid );
+										var thankedBy	= $( 'thankedBy_' + pid );
+										var thankersBox = $( 'thankersBox_' + pid );
+
+										if ( thankersBox.getAttribute( 'title' ) == 'hidden' )
+										{
+											thankersBox.style.display = "block";
+											
+											thankers.innerHTML = t.responseJSON['thankers'];
+										}
+										else
+										{
+											ajaxThanksExpand( pid );
+											thankers.innerHTML = t.responseJSON['thankers'];
+										}
+										
+										if ( thankersBox.getAttribute( 'title' ) == 'hidden' )
+										{
+											thankersBox.style.display = "block";
+										}
+										
+										// Update thanked by text (increment number show plural)
+										
+										if ( thankedBy.title != '0' )
+										{
+											var thankers = parseInt( thankedBy.title ) - 1;
+											
+											if ( thankers > 1 )
+											{
+												thankedBy.innerHTML = ipb.lang['en30_thanked_by'] + ' ' + thankers + ' ' + ipb.lang['en30_users'];
+												new Effect.Pulsate( thankersBox, { pulses: 3, duration: 1.5 } );
+											}
+											if ( thankers == 1 )
+											{
+												thankedBy.innerHTML = ipb.lang['en30_thanked_by'] + ' ' + thankers + ' ' + ipb.lang['en30_user'];
+												new Effect.Pulsate( thankersBox, { pulses: 3, duration: 1.5 } );
+											}
+											else
+											{
+												thankersBox.style.display = "none";
+											}
+										}
+									}
+								}
+							}
+						);
+}
+
+function ajaxThanks( pid )
+{
+		// Kill the thanks button of this specific post
+		
+		new Effect.DropOut( 'ajaxThanks_' + pid );
+		var url = ipb.vars['base_url'] + 'app=forums&module=ajax&section=stats&do=ajaxThanks';
+		
+		new Ajax.Request(	url,
+							{
+								method: 'post',
+								evalJSON: 'force',
+								parameters: {
+									md5check: 		ipb.vars['secure_hash'],
+									pid:			pid,
+									tid:			ipb.topic.topic_id,
+									fid:			ipb.topic.forum_id
+								},
+								onSuccess: function(t)
+								{
+									if( t.responseJSON['error'] )
+									{
+										alert( t.responseJSON['error'] );
+									}
+									else
+									{
+										var thankers	= $( 'thankers_' + pid );
+										var thankedBy	= $( 'thankedBy_' + pid );
+										var thankersBox = $( 'thankersBox_' + pid );
+										
+										var newLink	= "<a href='" + ipb.vars['base_url'] + "showuser=" + t.responseJSON['member_id'] + "' title='" + t.responseJSON['members_display_name'] + "'>" + t.responseJSON['members_display_name'] + "</a>" + "&nbsp;<a href='" + ipb.vars['base_url'] + "showuser=" + t.responseJSON['member_id'] + "' class='__user __id" + t.responseJSON['member_id'] + "' title='Ver Perfil'><img src='http://mymdqueens.com/public/style_images/mymdqueens_images/user_popup.png' alt='' /></a>";
+										if ( thankersBox.getAttribute( 'title' ) == 'hidden' )
+										{
+											thankersBox.style.display = "block";
+											
+											thankers.innerHTML = newLink;
+										}
+										else
+										{
+											ajaxThanksExpand( pid );
+											thankers.innerHTML = newLink + ", " + thankers.innerHTML;
+										}
+										
+										if ( thankersBox.getAttribute( 'title' ) == 'hidden' )
+										{
+											thankersBox.style.display = "block";
+										}
+										
+										// Update thanked by text (increment number show plural)
+										
+										if ( thankedBy.title != '0' )
+										{
+											thankedBy.innerHTML = ipb.lang['en30_thanked_by'] + ' ' + ( parseInt( thankedBy.title ) + 1 ) + ' ' + ipb.lang['en30_users'];
+										}
+										
+										// Update post content for hide hack
+										
+										if ( t.responseJSON['post'] != "" )
+										{
+											// Editless attempt to reach the post content
+
+											var postDivider = $( 'post_id_' + pid ).children[1].children[2].children[1];
+											postDivider.innerHTML = t.responseJSON['post'];
+											
+											new Effect.Pulsate( postDivider, { duration: 1.5,  pulses: 3 } );
+										}
+
+										new Effect.Pulsate( thankersBox, { pulses: 3, duration: 1.5 } );
+									}
+								}
+							}
+						);
+}
+
+</script>
+
+
+	
+		
+			
+			
+			
+			
+				<link id="ipsCanonical" rel="canonical" href="./valen_files/valen.htm">
+			
+		
+
+			
+			
+			
+			
+				<link rel="stylesheet" type="text/css" title="Main" media="print" href="./valen_files/ipb_print.css">
+			
+		
+
+			
+			
+			
+			
+				<link rel="up" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/">
+			
+		
+
+			
+			
+			
+			
+				<link rel="author" href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/">
+			
+		
+
+			
+			
+			
+			
+							<script type="text/javascript">
+			//<![CDATA[
+			ipb.global.activateMainMenu = function() {};
+			//]]>
+			</script>
+			
+		
+	
+
+		
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="General" href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=1">
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Certamenes Masculinos" href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=2">
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Certamenes Femeninos" href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=3">
+			
+			
+			
+		
+
+			
+			
+				<link rel="alternate" type="application/rss+xml" title="Dinámicas" href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=4">
+			
+			
+			
+		
+	
+
+		
+			
+				<script type="text/javascript" src="./valen_files/fusionmenu.js" charset="UTF-8"></script>
+			
+			
+			
+			
+		
+	
+
+	
+
+
+	
+
+
+
+<!-- Forces topic photo to show without thumb -->
+	<style type="text/css">
+		.ipsUserPhoto_variable { max-width: 103px !important; }
+		
+			.post_body { margin-left: 185px !important; }
+		
+	</style>		
+		<script type="text/javascript">
+	//<![CDATA[
+		/* ---- URLs ---- */
+		ipb.vars['base_url'] 			= 'http://mymdqueens.com/index.php?s=1bdacad3fe81e0dd717aae756e81dee3&';
+		ipb.vars['board_url']			= 'http://mymdqueens.com';
+		ipb.vars['img_url'] 			= "http://mymdqueens.com/public/style_images/mymdqueens_images";
+		ipb.vars['loading_img'] 		= 'http://mymdqueens.com/public/style_images/mymdqueens_images/loading.gif';
+		ipb.vars['active_app']			= 'forums';
+		ipb.vars['upload_url']			= 'http://mymdqueens.com/uploads';
+		/* ---- Member ---- */
+		ipb.vars['member_id']			= parseInt( 0 );
+		ipb.vars['is_supmod']			= parseInt( 0 );
+		ipb.vars['is_admin']			= parseInt( 0 );
+		ipb.vars['secure_hash'] 		= '880ea6a14ea49e853634fbdc5015a024';
+		ipb.vars['session_id']			= '1bdacad3fe81e0dd717aae756e81dee3';
+		ipb.vars['twitter_id']			= 0;
+		ipb.vars['fb_uid']				= 0;
+		ipb.vars['auto_dst']			= parseInt( 0 );
+		ipb.vars['dst_in_use']			= parseInt(  );
+		ipb.vars['is_touch']			= false;
+		ipb.vars['member_group']		= {"g_mem_info":"0"}
+		/* ---- cookies ----- */
+		ipb.vars['cookie_id'] 			= '';
+		ipb.vars['cookie_domain'] 		= '';
+		ipb.vars['cookie_path']			= '/';
+		/* ---- Rate imgs ---- */
+		ipb.vars['rate_img_on']			= 'http://mymdqueens.com/public/style_images/mymdqueens_images/star.png';
+		ipb.vars['rate_img_off']		= 'http://mymdqueens.com/public/style_images/mymdqueens_images/star_off.png';
+		ipb.vars['rate_img_rated']		= 'http://mymdqueens.com/public/style_images/mymdqueens_images/star_rated.png';
+		/* ---- Uploads ---- */
+		ipb.vars['swfupload_swf']		= 'http://mymdqueens.com/public/js/3rd_party/swfupload/swfupload.swf';
+		ipb.vars['swfupload_enabled']	= true;
+		ipb.vars['use_swf_upload']		= ( '' == 'flash' ) ? true : false;
+		ipb.vars['swfupload_debug']		= false;
+		/* ---- other ---- */
+		ipb.vars['highlight_color']     = "#ade57a";
+		ipb.vars['charset']				= "UTF-8";
+		ipb.vars['seo_enabled']			= 1;
+		
+		ipb.vars['seo_params']			= {"start":"-","end":"\/","varBlock":"\/page__","varSep":"__"};
+		
+		/* Templates/Language */
+		ipb.templates['inlineMsg']		= "";
+		ipb.templates['ajax_loading'] 	= "<div id='ajax_loading'><img src='http://mymdqueens.com/public/style_images/mymdqueens_images/ajax_loading.gif' alt='" + ipb.lang['loading'] + "' /></div>";
+		ipb.templates['close_popup']	= "<img src='http://mymdqueens.com/public/style_images/mymdqueens_images/close_popup.png' alt='x' />";
+		ipb.templates['rss_shell']		= new Template("<ul id='rss_menu' class='ipbmenu_content'>#{items}</ul>");
+		ipb.templates['rss_item']		= new Template("<li><a href='#{url}' title='#{title}'>#{title}</a></li>");
+		ipb.templates['m_add_friend']	= new Template("<a href='http://mymdqueens.com/index.php?app=members&amp;module=profile&amp;section=friends&amp;do=add&amp;member_id=#{id}' title='Añadir como Amigo' class='ipsButton_secondary'><img src='http://mymdqueens.com/public/style_images/mymdqueens_images/user_add.png' alt='Añadir como Amigo' /></a>");
+		ipb.templates['m_rem_friend']	= new Template("<a href='http://mymdqueens.com/index.php?app=members&amp;module=profile&amp;section=friends&amp;do=remove&amp;member_id=#{id}' title='Eliminar Amigo' class='ipsButton_secondary'><img src='http://mymdqueens.com/public/style_images/mymdqueens_images/user_delete.png' alt='Eliminar Amigo' /></a>");
+		ipb.templates['autocomplete_wrap'] = new Template("<ul id='#{id}' class='ipb_autocomplete' style='width: 250px;'></ul>");
+		ipb.templates['autocomplete_item'] = new Template("<li id='#{id}' data-url='#{url}'><img src='#{img}' alt='' class='ipsUserPhoto ipsUserPhoto_mini' />&nbsp;&nbsp;#{itemvalue}</li>");
+		ipb.templates['page_jump']		= new Template("<div id='#{id}_wrap' class='ipbmenu_content'><h3 class='bar'>Ir a la página</h3><p class='ipsPad'><input type='text' class='input_text' id='#{id}_input' size='8' /> <input type='submit' value='Ir' class='input_submit add_folder' id='#{id}_submit' /></p></div>");
+		ipb.templates['global_notify'] 	= new Template("<div class='popupWrapper'><div class='popupInner'><div class='ipsPad'>#{message} #{close}</div></div></div>");
+		
+		
+		ipb.templates['header_menu'] 	= new Template("<div id='#{id}' class='ipsHeaderMenu boxShadow'></div>");
+		
+		Loader.boot();
+	//]]>
+	</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24076772-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
+<script language="JavaScript">
+function popUp(URL) {
+day = new Date();
+id = day.getTime();
+eval("page" + id + " = window.open(URL, '" + id + "', 'toolbar=0,scrollbars=0,location=0,statusbar=0,menubar=0,resizable=0,width=510,height=310,left = 545,top = 295');");
+}
+</script>
+
+
+
+	<link type="text/css" rel="stylesheet" charset="UTF-8" href="./valen_files/translateelement.css"><script type="text/javascript" charset="UTF-8" src="./valen_files/main_es.js"></script><script type="text/javascript" charset="UTF-8" src="./valen_files/element_main.js"></script></head>
+	<body id="ipboard_body" style="position: relative; min-height: 100%; top: 0px; ">
+		<p id="content_jump" class="hide"><a id="top"></a><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#j_content" title="Ir a contenido" accesskey="m">Ir a contenido</a></p>
+
+
+
+<!--<center><A HREF="javascript:popUp('http://mymdqueens.com/video.html')"><img src="/dom.png"></A></center>-->
+
+
+		<div id="ipbwrapper">
+			<!-- ::: TOP BAR: Sign in / register or user drop down and notification alerts ::: -->
+			<div id="header_bar" class="clearfix">
+				<div class="main_width">
+<ul class="ipsList_google left"><li>
+<div id="google_translate_element"><div class="skiptranslate goog-te-gadget" style=""><div id=":0.targetLanguage" style="white-space: nowrap; " class="goog-te-gadget-simple"><img src="./valen_files/cleardot.gif" class="goog-te-gadget-icon" style="background-image: url(http://translate.googleapis.com/translate_static/img/te_ctrl3.gif); background-position: -65px 0px; "><span style="vertical-align: middle; "><a class="goog-te-menu-value" href="javascript:void(0)"><span>Seleccionar idioma</span><img src="./valen_files/cleardot.gif" width="1" height="1"><span style="border-left-width: 1px; border-left-style: solid; border-left-color: rgb(187, 187, 187); ">​</span><img src="./valen_files/cleardot.gif" width="1" height="1"><span style="color: rgb(155, 155, 155); ">▼</span></a></span></div></div></div><script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'es',
+    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+  }, 'google_translate_element');
+}
+</script><script src="./valen_files/element.js"></script></li></ul>
+					
+	<div id="masthead">
+
+
+		<ul id="primary_navigation">
+
+
+				
+					<li id="nav_app_contactus">
+						<a href="http://mymdqueens.com/index.php?app=contactus"><img src="./valen_files/email_to_friend.png" alt="Contacto">&nbsp;&nbsp;&nbsp;Contacto</a>
+						
+					</li>
+				
+
+					<li id="nav_124">
+						<a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#"><img src="./valen_files/help.png" alt="Ayuda">&nbsp;&nbsp;&nbsp;Ayuda</a>
+						
+							
+	<ul id="nav_124_menu" class="main_menu" style="display: none; ">
+	
+		<li><a href="http://mymdqueens.com/tutorials/" title=""><img src="./valen_files/text.png" alt="Tutoriales">&nbsp;&nbsp;&nbsp;Tutoriales</a></li>
+	
+</ul>
+<script type="text/javascript">
+	fd.menus['124'] = new fd.menu( $('nav_124'), $('nav_124_menu') );
+</script>
+
+						
+					</li>
+				
+		
+		</ul>
+	</div>
+
+
+
+					<div id="user_navigation" class="not_logged_in">
+							
+							<ul class="ipsList_inline right">
+								<li>
+									<span class="services">
+										
+										
+											<a href="https://mymdqueens.com/index.php?app=core&module=global&section=login&serviceClick=twitter"><img src="./valen_files/twitter.png" alt="Logearse con Twitter"></a>
+										
+										
+											<a href="https://mymdqueens.com/index.php?app=core&module=global&section=login&serviceClick=openid"><img src="./valen_files/openid.png" alt="Logearse con OpenID"></a>
+										
+										
+									</span>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<a href="https://mymdqueens.com/index.php?app=core&module=global&section=login" title="Identificarse" id="sign_in">Identificarse</a>&nbsp;&nbsp;&nbsp;
+								</li>
+								<li>
+									<a href="https://mymdqueens.com/index.php?app=core&module=global&section=register" title="Registrarse" id="register_link">Registrarse</a>
+								</li>
+							</ul>
+						</div>
+				</div>
+			</div>
+			<!-- ::: BRANDING STRIP: Logo and search box ::: -->
+			<div id="branding">
+				<div class="main_width">
+					<div id="logo">
+						
+							<a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/forum/4-reinas-de-belleza-internacional/" base="public" }"="" title="Regresar a Reinas de Belleza"><img src="./valen_files/2zf7r6g.png" alt="Logo"></a>
+						
+					</div>
+					
+				</div>
+			</div>
+			<!-- ::: APPLICATION TABS ::: -->
+			<center><div id="primary_nav" class="clearfix">
+				<div class="main_width">
+					<ul class="ipsList_inline" id="community_app_menu">
+						
+							<li class="right">
+								<a href="http://mymdqueens.com/index.php?app=core&module=global&section=navigation&inapp=forums" rel="quickNavigation" accesskey="9" id="quickNavLaunch" title="Abrir Navegación Rápida"><span>&nbsp;</span></a>
+							</li>
+						
+						<li id="nav_explore" class="right">
+							<a href="http://mymdqueens.com/index.php?app=core&module=search&do=viewNewContent&search_app=forums" accesskey="2">Ver Nuevos Contenidos</a>
+						</li>
+						
+							<li id="nav_home" class="left"><a href="http://www.mymdqueens.com/" title="Página de Inicio" rel="home">Inicio</a></li>
+						
+																								
+						
+			
+		<li id="nav_app_calendar" class="left "><a href="http://mymdqueens.com/calendar/" title=""><img src="./valen_files/calendar.png" alt="Calendario">&nbsp;&nbsp;&nbsp;Calendario</a></li>
+	
+
+		<li id="nav_app_members" class="left "><a href="http://mymdqueens.com/index.php?app=members" title=""><img src="./valen_files/group.png" alt="Miembros">&nbsp;&nbsp;&nbsp;Miembros</a></li>
+	
+
+		<li id="nav_app_gallery" class="left "><a href="http://mymdqueens.com/gallery/" title=""><img src="./valen_files/photos.png" alt="Fotogaleria">&nbsp;&nbsp;&nbsp;Fotogaleria</a></li>
+	
+
+		<li id="nav_app_videos" class="left "><a href="http://mymdqueens.com/videos/" title=""><img src="./valen_files/youtube.png" alt="Videos">&nbsp;&nbsp;&nbsp;Videos</a></li>
+	
+
+		<li id="nav_app_awards" class="left "><a href="http://mymdqueens.com/index.php?app=awards" title=""><img src="./valen_files/award_star_gold_1.png" alt="Awards">&nbsp;&nbsp;&nbsp;Awards</a></li>
+	
+
+		<li id="nav_115" class="left "><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" title=""><img src="./valen_files/plus1.png" alt="Más">&nbsp;&nbsp;&nbsp;Más</a></li>
+	
+
+						<li id="nav_other_apps" style="display: none">
+							<a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" class="ipbmenu" id="more_apps">Más <img src="./valen_files/useropts_arrow.png"></a>
+						</li>
+					</ul>
+				</div>
+				<script type="text/javascript">
+					if( $('primary_nav') ){	ipb.global.activateMainMenu(); }
+				</script>
+			</div>	</center>
+			
+			<!-- ::: MAIN CONTENT AREA ::: -->
+			<div id="content" class="clearfix">
+				<!-- ::: NAVIGATION BREADCRUMBS ::: -->
+				<div id="secondary_navigation" class="clearfix">
+						<ol class="breadcrumb top ipsList_inline left">
+														<li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+									<a href="http://mymdqueens.com/" itemprop="url">
+										<span itemprop="title">MYMDQUEENS Reinas de Belleza Internacional</span>
+									</a>
+								</li>
+								
+							
+								<li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class="nav_sep">→ </span>
+									 <a href="http://mymdqueens.com/forum/3-certamenes-nacionales-e-internacionales/" title="Volver a  Certamenes Nacionales e Internacionales" itemprop="url"><span itemprop="title">Certamenes Nacionales e Internacionales</span></a>
+								</li>
+								
+							
+
+								<li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+									<span class="nav_sep">→ </span>
+									 <a href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a  Reinas de Belleza Internacional" itemprop="url"><span itemprop="title">Reinas de Belleza Internacional</span></a>
+								</li>
+								
+							
+						</ol>
+					</div>
+					<br>
+				<noscript>
+					&lt;div class='message error'&gt;
+						&lt;strong&gt;Detectado JavaScript desactivado&lt;/strong&gt;
+						&lt;p&gt;Actualmente tienes JavaScript deshabilitado. Varias funciones pueden no funcionaran. Por favor, vuelva a habilitar Javascript para acceder a la funcionalidad completa.&lt;/p&gt;
+					&lt;/div&gt;
+					&lt;br /&gt;
+				</noscript>
+				<!-- ::: CONTENT ::: -->
+				
+				<!--[if lt IE 7]>
+	<div style=" clear: both; height: 59px; padding:0 0 0 15px; position: relative; text-align: center;">
+          <p class='message error'>
+	     <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode" target="_blank">
+<img src="http://www.theie6countdown.com/images/upgrade.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." /></a>
+          </p>
+	</div><br /><br />
+<![endif]--><p class="bbc_center"><a href="http://mymdqueens.com/index.php?app=advadverts&module=core&section=main&do=redir&aid=1" target="_blank"><img src="./valen_files/b0ef0-1332263331.jpg" style="border:0;"></a></p><style type="text/css">
+/* Carousel */
+.pluit-carousel {
+  position: relative;
+  margin-bottom: 1em;
+  direction:ltr;
+}
+.pluit-carousel img {
+  border: 0;
+  display: block;
+}
+.pluit-carousel ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+/* Viewport */
+.pluit-carousel .viewport {
+  margin-bottom: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.pluit-carousel .viewport ul {
+  width: 8000px;
+}
+.pluit-carousel .viewport ul li {
+  display: block;
+  float: left;
+}
+.pluit-carousel .viewport ul ul {
+  width: auto;
+  float: left;
+}
+.pluit-carousel .viewport ul ul li {
+  margin-right: 5px;
+}
+/* Description */
+.pluit-carousel .viewport li {
+  position: relative;
+  padding-right: 0px;
+}
+.pluit-carousel .viewport .desc {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  color: #fff;
+}
+.pluit-carousel .viewport .desc em {
+  position: absolute;
+  display: block;
+  padding: 8px 8px;
+  font-size: 11px;
+  font-style: normal;
+  color: #fff;
+  z-index: 1;
+}
+.pluit-carousel .viewport .desc a {
+  color: #fff;
+}
+.pluit-carousel .viewport .desc .shadow {
+  position: absolute;
+  background: #000;
+  filter: alpha(opacity=50);
+  opacity: 0.5;
+  top: 0;
+  width: 100%;
+  height: 48px;
+}
+/* Navigation */
+.pluit-carousel .nav {
+  position: relative;
+  padding: 0 3px;
+  height: 38px;
+  text-align:left;
+}
+.pluit-carousel .nav li a:hover {
+  background-position: -46px 0;
+}
+.pluit-carousel .nav .prev {
+  position: absolute;
+  right: 22px;
+}
+.pluit-carousel .nav .next {
+  position: absolute;
+  right: 2px;
+}
+.pluit-carousel .nav .prev a, .pluit-carousel .nav .next a {
+  width: 25px;
+  height: 38px;
+  background-position: -91px 0;
+}
+.pluit-carousel .nav .prev a:hover {
+  background-position: -179px 0;
+}
+.pluit-carousel .nav .next a {
+  background-position: -135px 0;
+}
+.pluit-carousel .nav .next a:hover {
+  background-position: -223px 0;
+}
+.pluit-carousel .nav .pages {
+  position: absolute;
+  top: 0px;
+  left: 2px;
+}
+.pluit-carousel .nav .pages ul {
+  float: left;
+}
+.pluit-carousel .nav .pages li {
+  float: left;
+  margin-right: 8px;
+}
+.pluit-carousel .nav .pages li a {
+  width: 25px;
+  height: 38px;
+}
+.pluit-carousel .nav .pages li.active a {
+  background-position: -46px 0;
+}
+.pluit-carousel ul, .pluit-carousel .nav .pages, .pluit-carousel .nav {
+  zoom: 1;
+}
+.pluit-carousel ul:after, .pluit-carousel .nav .pages:after, .pluit-carousel .nav:after {
+  content: '.';
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
+.pluit-carousel .nav li a {
+  display: block;
+  overflow: hidden;
+  text-indent: -100em;
+  background: url(http://mymdqueens.com/fcontent/carousel_nav.png) no-repeat 0 0;
+  outline: none;
+}
+</style>
+<script type="text/javascript" src="./valen_files/pluit-carousel.js"></script>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+	ipb.topic.inSection = 'topicview';
+	ipb.topic.topic_id  = 49061;
+	ipb.topic.forum_id  = 4;
+	ipb.topic.start_id  = 0;
+	ipb.topic.topPid    = 0;
+	ipb.topic.counts    = { postTotal: 8,
+							curStart:  ipb.topic.start_id,
+							perPage:   20 };
+	//Search Setup
+	ipb.vars['search_type']			= 'forum';
+	ipb.vars['search_type_id']		= 4;
+	ipb.vars['search_type_2']		= 'topic';
+	ipb.vars['search_type_id_2']	= 49061;
+	
+	
+	// Delete stuff set up
+	ipb.topic.deleteUrls['hardDelete'] = new Template("http://mymdqueens.com/index.php?app=forums&amp;module=moderate&section=moderate&do=04&f=4&t=49061&st=&auth_key=880ea6a14ea49e853634fbdc5015a024&p=#{pid}");
+	ipb.topic.deleteUrls['softDelete'] = new Template("http://mymdqueens.com/index.php?app=forums&module=moderate&section=moderate&do=postchoice&tact=sdelete&t=49061&f=4&auth_key=880ea6a14ea49e853634fbdc5015a024&selectedpids[#{pid}]=#{pid}&pid=#{pid}");
+	
+//]]>
+</script>
+
+
+
+
+<div class="__like right" data-app="forums" data-area="topics" data-relid="49061" data-isfave="">
+	<span class="ipsButton_extra right _fmore clickable" title="1 miembro(s) siguen este Tema" data-tooltip="1 miembro(s) siguen este Tema"><img src="./valen_files/icon_users.png"> <strong>1</strong></span>
+
+</div>
+<script type="text/javascript">
+	var FAVE_TEMPLATE = new Template( "<h3>No seguir este Tema</h3><div class='ipsPad'><span class='desc'>Si No seguir este Tema usted ya no recibirá ninguna notificación</span><br /><p class='ipsForm_center'><input type='button' value='No seguir este Tema' class='input_submit _funset' /></p></div>");
+</script>
+<a href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" class="ipsUserPhotoLink">
+	<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_medium left">
+</a>
+<div class="ipsBox_withphoto">
+	<span class="rating ipsType_smaller">
+			
+			
+				<img src="./valen_files/star_off.png" alt="-" class="rate_img">
+			
+			
+			
+				<img src="./valen_files/star_off.png" alt="-" class="rate_img">
+			
+			
+			
+				<img src="./valen_files/star_off.png" alt="-" class="rate_img">
+			
+			
+			
+				<img src="./valen_files/star_off.png" alt="-" class="rate_img">
+			
+			
+			
+				<img src="./valen_files/star_off.png" alt="-" class="rate_img">
+			
+			
+			<span id="rating_text">
+				
+			</span>
+			
+		</span>	<h1 class="ipsType_pagetitle">
+		Habian visto estas de Macri Velez??<span class="desc" style="font-size: 0.7em; margin-left:10px">QUE DIOSA!!</span>
+	</h1>
+	<div class="desc lighter blend_links">
+		 Iniciado por <a hovercard-ref="member" hovercard-id="116" class="_hovertrigger url fn" href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil"><span style="font-weight:bold;color:#ac785a"><span style="font-weight:bold;color:#ac785a">♥ ✬Dίvα εℓεcтяα!✬ ♥</span></span></a>, mar 06 2011 03:19 
+	</div>
+	
+</div>
+
+<br>
+<div class="=topic_controls">
+	
+	<ul class="topic_buttons">
+		<li class="fuccia"><a href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+				
+					<li class="disabled"><span>No puedes responder a este tema</span></li>
+				
+		
+	</ul>	
+</div>
+
+<div class="maintitle clear clearfix">
+	<span class="ipsType_small">
+		7 Respuesta(s) a este Tema
+	</span>
+		
+</div>
+
+<div class="topic hfeed clear clearfix">
+	
+	
+	
+	
+	
+
+	<div class="ipsBox">
+		<div class="ipsBox_container" id="ips_Posts">
+			
+				<!--post:624577-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624577">
+		<a id="entry624577"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624577" rel="bookmark" title="Enlace al mensaje  #1">#1</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="116" class="_hovertrigger url fn" href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil"><span style="font-weight:bold;color:#ac785a"><span style="font-weight:bold;color:#ac785a">♥ ✬Dίvα εℓεcтяα!✬ ♥</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Superstar</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#ac785a">Moderador</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#4E387E">Estrella Amatista</span>, <span style="font-weight:bold;color:#000000">Estrella Azabache</span>, <span style="font-weight:bold;color:#348017">Estrella Esmeralda</span>, <span style="font-weight:bold;color:#C11B17">Estrella Rubi</span>, <span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#B404AE">Supranational</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/moderador.png" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			18.389 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 11 Months and 19 Days
+			</li>
+				<li class="post_count desc lighter">
+					0 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Sexo:</span><span class="fc">Femenino</span>
+						</li>
+					
+				
+
+					
+						<li>
+							<span class="row_title">País:</span><span class="row_data"> <img src="./valen_files/co.png" title="Colombia"></span>
+						</li>
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Certamen:</span><span class="fc">Miss Universe</span>
+
+						</li>
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: None chosen" src="./valen_files/None.gif" alt="Current mood: None chosen" title="Current mood: None chosen">	
+		
+	
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T03:19:22+00:00">06 marzo 2011 - 03:19 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="font-family: Tahoma;  color: #6495ED;    font-variant: small-caps;  
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><span rel="lightbox"><img src="./valen_files/167290_489910022198_717662198_6253433_2725597_n.jpg" alt="Imagen enviada" class="bbc_img"></span><br>
+<br>
+<span rel="lightbox"><img src="./valen_files/167845_489911257198_717662198_6253443_3383029_n.jpg" alt="Imagen enviada" class="bbc_img"></span><br>
+<br>
+<span rel="lightbox"><img src="./valen_files/165506_489911487198_717662198_6253445_2547265_n.jpg" alt="Imagen enviada" class="bbc_img"></span><br>
+<br>
+<span rel="lightbox"><img src="./valen_files/167050_489919647198_717662198_6253662_8100926_n.jpg" alt="Imagen enviada" class="bbc_img"></span><br>
+<br>
+DEMASIADOOOOOOOOOOO DIOSAAAAA!! <img src="./valen_files/wub.gif" class="bbc_emoticon" alt=":wub:"></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624577', { domLikeStripId: 'like_post_624577', app: 'forums', type: 'pid', typeid: '624577' }, parseInt('0') );
+</script>
+							
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624577);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624577') )
+	{
+		$('multiq_624577').show();
+	}
+	
+	if( $('toggle_post_624577') )
+	{
+		$('toggle_post_624577').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624577] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624577" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624577" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624577"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624585-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624585">
+		<a id="entry624585"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624585" rel="bookmark" title="Enlace al mensaje  #2">#2</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="812" class="_hovertrigger url fn" href="http://mymdqueens.com/user/812-s%ce%b1l%e1%bb%9d/" title="Ver Perfil"><span style="font-weight:bold;color:#F62817"><span style="font-weight:bolder;color: #0C90A6;">-  Šαlờ  -</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Black Platinum</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/812-s%ce%b1l%e1%bb%9d/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/photo-812.jpg" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#F62817">Love</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#DBA901">Fierce</span>, <span style="font-weight:bold;color:#B40431">Glam</span>, <span style="font-weight:bold;color:#461B7E">Hope</span>, <span style="font-weight:bold;color:#46C7C7">Peace</span>, <span style="font-weight:bold;color:#C0C0C0">Wonderful</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/love.gif" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			22.865 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 6 Months and 17 Days
+			</li>
+				<li class="post_count desc lighter">
+					0 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+				
+
+					
+				
+			
+
+				
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: Sad" src="./valen_files/Sad.gif" alt="Current mood: Sad" title="Current mood: Sad">	
+		
+	<div style="margin-top:10px;">
+  <h3><a href="http://mymdqueens.com/user/812-s%ce%b1l%e1%bb%9d/page__tab__awards">User's Awards</a></h3>
+  <div class="row2" style="padding:7px;">
+    <img src="./valen_files/sal.gif" width="150" height="112,5" alt="" title=""> 
+  </div>
+</div>
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T03:24:19+00:00">06 marzo 2011 - 03:24 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="font-family: Segoe UI; font-size: 14px; color: #000000;      font-style: normal;
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><img src="./valen_files/dh.gif" class="bbc_emoticon" alt=":memuero:"><br>
+<br>
+<br>
+PRECIOSA Macriiiiii</span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624585', { domLikeStripId: 'like_post_624585', app: 'forums', type: 'pid', typeid: '624585' }, parseInt('0') );
+</script>
+							
+					<div class="signature" data-memberid="812">
+	
+	<!--cached-Sat, 12 May 2012 02:41:43 +0000--><p class="bbc_center"><span rel="lightbox"><img src="./valen_files/b5fbef.jpg" alt="Imagen enviada" class="bbc_img"></span></p>
+</div>
+				
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624585);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624585') )
+	{
+		$('multiq_624585').show();
+	}
+	
+	if( $('toggle_post_624585') )
+	{
+		$('toggle_post_624585').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624585] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624585" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624585" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624585"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624588-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624588">
+		<a id="entry624588"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624588" rel="bookmark" title="Enlace al mensaje  #3">#3</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="617" class="_hovertrigger url fn" href="http://mymdqueens.com/user/617-carlosm3/" title="Ver Perfil"><span style="font-weight:bold;color:#4E387E"><span style="font-weight:bold;color:#4E387E">CaRLoSM3</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Professional Torturer..♫</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/617-carlosm3/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#4E387E">Estrella Amatista</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#000000">Estrella Azabache</span>, <span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#2554C7">Exelencia 1</span>, <span style="font-weight:bold;color:#C68E17">Honor</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/amatista.gif" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			9.823 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 8 Months and 25 Days
+			</li>
+				<li class="post_count desc lighter">
+					0 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Sexo:</span><span class="fc">Masculino</span>
+						</li>
+					
+				
+
+					
+						<li>
+							<span class="row_title">País:</span><span class="row_data"> <img src="./valen_files/co.png" title="Colombia"></span>
+						</li>
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Certamen:</span><span class="fc">Miss Universe</span>
+
+						</li>
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: None chosen" src="./valen_files/None.gif" alt="Current mood: None chosen" title="Current mood: None chosen">	
+		
+	
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T03:25:09+00:00">06 marzo 2011 - 03:25 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="font-family: Segoe UI; font-size: 12pt;   text-decoration: ;  text-transform: ;   font-style: Normal;
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><p class="bbc_center">esa mujer me encanta!!!!!</p></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624588', { domLikeStripId: 'like_post_624588', app: 'forums', type: 'pid', typeid: '624588' }, parseInt('0') );
+</script>
+							
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624588);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624588') )
+	{
+		$('multiq_624588').show();
+	}
+	
+	if( $('toggle_post_624588') )
+	{
+		$('toggle_post_624588').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624588] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624588" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624588" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624588"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624593-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624593">
+		<a id="entry624593"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624593" rel="bookmark" title="Enlace al mensaje  #4">#4</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="116" class="_hovertrigger url fn" href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil"><span style="font-weight:bold;color:#ac785a"><span style="font-weight:bold;color:#ac785a">♥ ✬Dίvα εℓεcтяα!✬ ♥</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Superstar</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#ac785a">Moderador</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#4E387E">Estrella Amatista</span>, <span style="font-weight:bold;color:#000000">Estrella Azabache</span>, <span style="font-weight:bold;color:#348017">Estrella Esmeralda</span>, <span style="font-weight:bold;color:#C11B17">Estrella Rubi</span>, <span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#B404AE">Supranational</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/moderador.png" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			18.389 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 11 Months and 19 Days
+			</li>
+				<li class="post_count desc lighter">
+					0 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Sexo:</span><span class="fc">Femenino</span>
+						</li>
+					
+				
+
+					
+						<li>
+							<span class="row_title">País:</span><span class="row_data"> <img src="./valen_files/co.png" title="Colombia"></span>
+						</li>
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Certamen:</span><span class="fc">Miss Universe</span>
+
+						</li>
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: None chosen" src="./valen_files/None.gif" alt="Current mood: None chosen" title="Current mood: None chosen">	
+		
+	
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T03:26:55+00:00">06 marzo 2011 - 03:26 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="font-family: Tahoma;  color: #6495ED;    font-variant: small-caps;  
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000-->SIIII.. QUE CUERPO, QUE ROSTROOOO!!<br>
+<br>
+Pero sin duda alguna, no tuvo suerte, al igual que Nati.. <img src="./valen_files/sad.gif" class="bbc_emoticon" alt=":("> <img src="./valen_files/sad.gif" class="bbc_emoticon" alt=":("></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624593', { domLikeStripId: 'like_post_624593', app: 'forums', type: 'pid', typeid: '624593' }, parseInt('0') );
+</script>
+							
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624593);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624593') )
+	{
+		$('multiq_624593').show();
+	}
+	
+	if( $('toggle_post_624593') )
+	{
+		$('toggle_post_624593').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624593] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624593" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624593" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624593"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624693-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624693">
+		<a id="entry624693"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624693" rel="bookmark" title="Enlace al mensaje  #5">#5</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="812" class="_hovertrigger url fn" href="http://mymdqueens.com/user/812-s%ce%b1l%e1%bb%9d/" title="Ver Perfil"><span style="font-weight:bold;color:#F62817"><span style="font-weight:bolder;color: #0C90A6;">-  Šαlờ  -</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Black Platinum</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/812-s%ce%b1l%e1%bb%9d/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/photo-812.jpg" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#F62817">Love</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#DBA901">Fierce</span>, <span style="font-weight:bold;color:#B40431">Glam</span>, <span style="font-weight:bold;color:#461B7E">Hope</span>, <span style="font-weight:bold;color:#46C7C7">Peace</span>, <span style="font-weight:bold;color:#C0C0C0">Wonderful</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/love.gif" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			22.865 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 6 Months and 17 Days
+			</li>
+				<li class="post_count desc lighter">
+					0 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+				
+
+					
+				
+			
+
+				
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: Sad" src="./valen_files/Sad.gif" alt="Current mood: Sad" title="Current mood: Sad">	
+		
+	<div style="margin-top:10px;">
+  <h3><a href="http://mymdqueens.com/user/812-s%ce%b1l%e1%bb%9d/page__tab__awards">User's Awards</a></h3>
+  <div class="row2" style="padding:7px;">
+    <img src="./valen_files/sal.gif" width="150" height="112,5" alt="" title=""> 
+  </div>
+</div>
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T04:10:02+00:00">06 marzo 2011 - 04:10 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="font-family: Segoe UI; font-size: 14px; color: #000000;      font-style: normal;
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><p class="bbc_center">Otra de Macri Helena<br>
+<br>
+<span rel="lightbox"><img src="./valen_files/252182942.jpg" alt="Imagen enviada" class="bbc_img"></span><br>
+</p></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624693', { domLikeStripId: 'like_post_624693', app: 'forums', type: 'pid', typeid: '624693' }, parseInt('0') );
+</script>
+							
+					<div class="signature" data-memberid="812">
+	
+	<!--cached-Sat, 12 May 2012 02:41:43 +0000--><p class="bbc_center"><span rel="lightbox"><img src="./valen_files/b5fbef.jpg" alt="Imagen enviada" class="bbc_img"></span></p>
+</div>
+				
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624693);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624693') )
+	{
+		$('multiq_624693').show();
+	}
+	
+	if( $('toggle_post_624693') )
+	{
+		$('toggle_post_624693').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624693] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624693" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624693" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624693"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624786-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624786">
+		<a id="entry624786"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624786" rel="bookmark" title="Enlace al mensaje  #6">#6</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="98" class="_hovertrigger url fn" href="http://mymdqueens.com/user/98-from-nica/" title="Ver Perfil"><span style="font-weight:bold;color:#C11B17"><span style="font-weight:bold;color:#C11B17">from_nica</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Miembro Diamante</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/98-from-nica/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#C11B17">Estrella Rubi</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#2554C7">Exelencia 1</span>, <span style="font-weight:bold;color:#254117">Exelencia 2</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/rubi.gif" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			3.958 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 11 Months and 19 Days
+			</li>
+				<li class="post_count desc lighter">
+					 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Sexo:</span><span class="fc">Masculino</span>
+						</li>
+					
+				
+
+					
+						<li>
+							<span class="row_title">País:</span><span class="row_data"> <img src="./valen_files/ni.png" title="Nicaragua"></span>
+						</li>
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Certamen:</span><span class="fc">Miss Universe</span>
+
+						</li>
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: None chosen" src="./valen_files/None.gif" alt="Current mood: None chosen" title="Current mood: None chosen">	
+		
+	
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T06:04:33+00:00">06 marzo 2011 - 06:04 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="   font-weight: bold;     
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><img src="./valen_files/dh.gif" class="bbc_emoticon" alt=":memuero:"> <img src="./valen_files/dh.gif" class="bbc_emoticon" alt=":memuero:"> <img src="./valen_files/dh.gif" class="bbc_emoticon" alt=":memuero:"></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624786', { domLikeStripId: 'like_post_624786', app: 'forums', type: 'pid', typeid: '624786' }, parseInt('0') );
+</script>
+							
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624786);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624786') )
+	{
+		$('multiq_624786').show();
+	}
+	
+	if( $('toggle_post_624786') )
+	{
+		$('toggle_post_624786').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624786] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624786" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624786" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624786"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624789-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624789">
+		<a id="entry624789"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624789" rel="bookmark" title="Enlace al mensaje  #7">#7</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="1080" class="_hovertrigger url fn" href="http://mymdqueens.com/user/1080-tyra-sanchez/" title="Ver Perfil"><span style="color:blue;"><span style="color:blue;">TYRA SANCHEZ</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Miembro Oficial</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/1080-tyra-sanchez/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="color:blue;">Miembros</span>
+		</li>
+		<li class="group_icon">
+			
+				<img src="./valen_files/bullet_black.png" alt="Marcar" style="cursor: pointer; "><img src="./valen_files/bullet_black.png" alt="Marcar" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			495 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 2 Months and 10 Days
+			</li>
+				<li class="post_count desc lighter">
+					 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Sexo:</span><span class="fc">Masculino</span>
+						</li>
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Certamen:</span><span class="fc">Miss Universe</span>
+
+						</li>
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: None chosen" src="./valen_files/None.gif" alt="Current mood: None chosen" title="Current mood: None chosen">	
+		
+	
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T06:12:32+00:00">06 marzo 2011 - 06:12 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="    text-decoration: ;  text-transform: ;   
+"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><span style="font-size: 14px;"><strong class="bbc">ELLA NO TIENE LOS OJOS CLAROS! </strong></span><img src="./valen_files/sad.gif" class="bbc_emoticon" alt=":("></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624789', { domLikeStripId: 'like_post_624789', app: 'forums', type: 'pid', typeid: '624789' }, parseInt('0') );
+</script>
+							
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624789);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624789') )
+	{
+		$('multiq_624789').show();
+	}
+	
+	if( $('toggle_post_624789') )
+	{
+		$('toggle_post_624789').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624789] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624789" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624789" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624789"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+				<!--post:624897-->
+
+<div class="post_block hentry clear clearfix " id="post_id_624897">
+		<a id="entry624897"></a>
+		
+	
+		
+		<div class="post_wrap">
+			
+				<h3 class="row2">
+			
+				
+				<span class="post_id right ipsType_small desc blend_links"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/page__view__findpost__p__624897" rel="bookmark" title="Enlace al mensaje  #8">#8</a></span>
+				
+	<span class="ipsBadge ipsBadge_grey">OFFLINE</span>
+ &nbsp;
+					<span class="author vcard"><a hovercard-ref="member" hovercard-id="116" class="_hovertrigger url fn" href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil"><span style="font-weight:bold;color:#ac785a"><span style="font-weight:bold;color:#ac785a">♥ ✬Dίvα εℓεcтяα!✬ ♥</span></span></a></span>
+				
+			
+				
+			</h3>
+			<div class="author_info">
+				<div class="user_details">
+	<ul class="basic_info">
+		
+			<p class="desc member_title">Superstar</p>
+		
+		<li class="avatar">
+				<a href="http://mymdqueens.com/user/116-%e2%99%a5-%e2%9c%acd%ce%afv%ce%b1-%ce%b5%e2%84%93%ce%b5c%d1%82%d1%8f%ce%b1%e2%9c%ac-%e2%99%a5/" title="Ver Perfil" class="ipsUserPhotoLink">
+					
+					<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_variable">
+				
+				</a>
+			</li>
+		<li class="group_title">
+			<span style="font-weight:bold;color:#ac785a">Moderador</span></li><li><span class="ft">Others: </span><span class="fc"><span style="font-weight:bold;color:#4E387E">Estrella Amatista</span>, <span style="font-weight:bold;color:#000000">Estrella Azabache</span>, <span style="font-weight:bold;color:#348017">Estrella Esmeralda</span>, <span style="font-weight:bold;color:#C11B17">Estrella Rubi</span>, <span style="font-weight:bold;color:#2B65EC">Estrella Zafiro</span>, <span style="font-weight:bold;color:#B404AE">Supranational</span></span></li>
+		
+		<li class="group_icon">
+			
+				<img src="./valen_files/moderador.png" alt="" style="cursor: pointer; ">
+			
+			</li>
+		
+		<li class="post_count desc lighter">
+			18.389 Mensaje(s)
+		</li>
+		<li class="post_count desc lighter">
+				Joined 1 Year, 11 Months and 19 Days
+			</li>
+				<li class="post_count desc lighter">
+					0 thanks
+				</li>
+						
+	</ul>
+	
+	
+		<ul class="custom_fields">
+			
+				
+					
+				
+
+					
+				
+
+					
+				
+
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Sexo:</span><span class="fc">Femenino</span>
+						</li>
+					
+				
+
+					
+						<li>
+							<span class="row_title">País:</span><span class="row_data"> <img src="./valen_files/co.png" title="Colombia"></span>
+						</li>
+					
+				
+			
+
+				
+					
+						<li>
+							<span class="ft">Certamen:</span><span class="fc">Miss Universe</span>
+
+						</li>
+					
+				
+			
+		</ul>
+	<!-- (TB) Moods -->
+<br>
+<img data-tooltip="Current mood: None chosen" src="./valen_files/None.gif" alt="Current mood: None chosen" title="Current mood: None chosen">	
+		
+	
+</div>
+			</div>
+			<div class="post_body">
+				<p class="posted_info desc lighter ipsType_small">
+					Publicado el <abbr class="published" title="2011-03-06T14:58:56+00:00">06 marzo 2011 - 02:58 </abbr>
+				</p>
+				
+				<div class="post entry-content ">
+					<span style="font-family: Tahoma;  color: #6495ED;    font-variant: small-caps;  
+" class="bbc_center"><!--cached-Sat, 12 May 2012 17:24:25 +0000--><p class="citation"><a class="snapback" rel="citation" href="http://mymdqueens.com/index.php?app=forums&module=forums&section=findpost&pid=624789"><img src="./valen_files/snapback.png" alt="Ver Mensajes"></a>JuanK, el 06 marzo 2011 - 06:12 , dijo:</p><div class="blockquote"><div class="quote">
+<span style="font-size: 14px;"><strong class="bbc">ELLA NO TIENE LOS OJOS CLAROS! </strong></span><img src="./valen_files/sad.gif" class="bbc_emoticon" alt=":("><br></div></div>
+<br>
+<img src="./valen_files/mellow.gif" class="bbc_emoticon" alt=":mellow:"></span>
+                                         <div class="overlay"></div>
+					
+					<br>
+					
+				</div>
+				
+<script type="text/javascript">
+	ipb.global.registerReputation( 'rep_post_624897', { domLikeStripId: 'like_post_624897', app: 'forums', type: 'pid', typeid: '624897' }, parseInt('0') );
+</script>
+							
+			
+				<ul class="post_controls clear clearfix">
+					<li class="top hide"><a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#ipboard_body" class="top" title="Volver arriba">Volver arriba</a></li>
+
+
+
+<li><a class="ipsButton_secondary" href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a Reinas de Belleza Internacional"><img src="./valen_files/back_forum.png"> Regresar</a></li>
+
+<li><a href="javascript:scroll(90000,90000)">Ir Abajo</a></li>
+
+<li><a href="javascript:scroll(0,0)">Ir Arriba</a></li>
+
+					
+
+					
+					
+					
+					
+					
+					
+				</ul>
+					
+			</div>
+		</div>
+	</div>
+		
+		
+		<hr>
+		
+		
+<script type="text/javascript">
+var pid = parseInt(624897);
+if ( pid > ipb.topic.topPid ){
+	ipb.topic.topPid = pid;
+}
+
+	// Show multiquote for JS browsers
+	if ( $('multiq_624897') )
+	{
+		$('multiq_624897').show();
+	}
+	
+	if( $('toggle_post_624897') )
+	{
+		$('toggle_post_624897').show();
+	}
+	
+	// Add perm data
+	ipb.topic.deletePerms[624897] = { 'canDelete' : 0, 'canSoftDelete' : 0 };
+
+</script>
+			
+	<div class="row2" id="thankersBox_624897" title="hidden" style="padding: 4px 0 4px 0; display: none">
+		<table class="ipb_table" cellpadding="6" cellspacing="1" border="0" width="100%" align="center">
+			<tbody>
+				<tr valign="top">
+					<td width="1%" nowrap="nowrap">
+						<div id="thankedBy_624897" title="0" style="font-weight: bold">Thanked by 1 Member:</div>
+					</td>
+					<td width="99%">
+						<div id="thankers_624897"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+<script type="text/javascript">
+//<![CDATA[
+$$( ".group_icon" ).each( function( elem )
+{
+	$( elem ).childElements().each( function( el )
+	{
+		$( el ).setStyle( { cursor: 'pointer' } );
+		$( el ).observe( 'click', function(e, elem)
+		{
+			if ( $('pip_popup') ) { $('pip_popup').remove(); }
+			new ipb.Popup ( 'pip', { w: '500px', h: '600px', ajaxURL: ipb.vars['base_url'] + "&app=forums&module=ajax&section=topics&do=pippopup&secure_key=" + ipb.vars['secure_hash'], hideAtStart: false });
+		});
+	});
+});
+//]]>
+</script>		</div>
+	</div>
+
+<hr>
+<!-- MOD LINKS -->
+
+<hr>
+<div class="topic_controls clear ipsPad_top_bottom_half">
+	
+	<div class="ipsPad_top_slimmer right">
+		<a href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" class="ipsType_small desc">Volver a Reinas de Belleza Internacional</a>
+		
+			· <a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/nextunread/" class="ipsType_small desc">Siguiente Tema sin leer →</a>
+		
+	</div>
+	
+	
+</div>
+<script type="text/javascript">
+	function toggleSimilar()
+	{
+		if ( $('sim_body').hasClassName('collapsedSim') )
+		{
+			$('sim_body').removeClassName('collapsedSim'); new Effect.BlindDown( $( $('sim_body') ) ); ipb.Cookie.set( 'dp3similartopics', 0, 1 ); $('sim_expand').hide(); $('sim_collapse').show();
+		}
+		else
+		{ 
+			$('sim_body').addClassName('collapsedSim'); new Effect.BlindUp( $( $('sim_body') ) ); ipb.Cookie.set( 'dp3similartopics', 1, 1 ); $('sim_expand').show(); $('sim_collapse').hide();
+		}
+	}
+</script>		
+<br>
+		<h3 id="similartopics" class="maintitle">Similar Topics <span id="sim_expand" style="float:right; width:25px;display: none;"><a href="javascript:toggleSimilar()" title="Expand"><img src="./valen_files/cat_maximize.png" alt="Expand"></a></span> 
+				<span id="sim_collapse" style="float:right;width:25px;display: inline;"> <a href="javascript:toggleSimilar()" title="Collapse"><img src="./valen_files/cat_minimize.png" alt="Collapse"></a> </span></h3>	
+<div id="sim_body">	
+<div class="ipsBox">
+	<div class="ipsBox_container">
+			<table class="ipb_table topic_list hover_rows" id="forum_table">					
+			<tbody><tr class="header">
+				<th scope="col" class="col_f_icon">&nbsp;</th>
+				<th scope="col" class="col_f_topic">Temas</th>
+				<th scope="col" class="col_f_starter short">Foro</th>				
+				<th scope="col" class="col_f_starter short">Iniciado Por</th>
+				<th scope="col" class="col_f_views stats">Estadísticas</th>
+				<th scope="col" class="col_f_post">Información del Último Mensaje</th>
+			</tr>	
+			<!-- BEGIN TOPICS -->
+			
+					<tr class="row1 __topic unread expandable" id="trow_74750" data-tid="74750">					
+						<td class="short altrow">
+							
+						</td>						
+						<td>
+							<a href="http://mymdqueens.com/topic/74750-que-feos-son-los-travestis-peruanos/page__view__getnewpost" title="Ir al primer mensaje no leído "><img src="./valen_files/new_post.png" alt="" title="Ir al primer mensaje no leído "></a>
+							 							
+													
+							
+																			
+							<h4><a id="tid-link-74750" href="http://mymdqueens.com/topic/74750-que-feos-son-los-travestis-peruanos/" title="Ver tema, empezado 29 octubre 2011 - 12:43 " class="topic_title">QUE FEOS SON LOS TRAVESTIS PERUANOS...</a></h4>
+							<br>
+							<span class="desc lighter blend_links">
+								
+							</span>
+							
+							
+							
+											
+						</td>						
+						<td>
+						<a href="http://mymdqueens.com/forum/10-entretenimiento/" title="Retornar a Entretenimiento">Entretenimiento</a>
+						</td>											
+						<td class="short altrow">
+							<a hovercard-ref="member" hovercard-id="117" class="_hovertrigger url fn " href="http://mymdqueens.com/user/117-milena-koehler/"><span style="color:gray;">MILENA KOEHLER</span></a>
+						</td>	
+						<td class="col_f_views desc blend_links">
+							<ul>
+								<li>12 Respuestas</li>
+					
+								<li class="views desc">1.670 Leidos</li>
+							</ul>
+						</td>					
+						<td class="col_f_post">
+							<a href="http://mymdqueens.com/user/555-jothanuz/" class="ipsUserPhotoLink left">
+								<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_mini">
+							</a>						
+							<ul class="last_post ipsType_small">
+								<li>
+									<a href="http://mymdqueens.com/topic/74750-que-feos-son-los-travestis-peruanos/page__view__getlastpost" title="Ir al último mensaje"><img src="./valen_files/last_post.png" alt="" title="Ver último mensaje"></a> <a href="http://mymdqueens.com/topic/74750-que-feos-son-los-travestis-peruanos/page__view__getlastpost" title="Ir al último mensaje">10 mayo 2012 - 04:38 </a>
+								</li>
+								<li>Por: <a hovercard-ref="member" hovercard-id="555" class="_hovertrigger url fn " href="http://mymdqueens.com/user/555-jothanuz/"><span style="font-weight:bold;color:#254117">JothanUz</span></a></li>
+							</ul>
+						</td>
+					</tr>
+				
+
+					<tr class="row2 __topic unread expandable" id="trow_78451" data-tid="78451">					
+						<td class="short altrow">
+							
+						</td>						
+						<td>
+							<a href="http://mymdqueens.com/topic/78451-antes-muerta-que-sencilla/page__view__getnewpost" title="Ir al primer mensaje no leído "><img src="./valen_files/new_post.png" alt="" title="Ir al primer mensaje no leído "></a>
+							 							
+													
+							
+																			
+							<h4><a id="tid-link-78451" href="http://mymdqueens.com/topic/78451-antes-muerta-que-sencilla/" title="Ver tema, empezado 08 enero 2012 - 06:42 " class="topic_title">ANTES MUERTA, QUE SENCILLA</a></h4>
+							<br>
+							<span class="desc lighter blend_links">
+								
+							</span>
+							
+							<span class="mini_rate">
+	
+		<img src="./valen_files/bullet_star.png" alt="*" class="mini_rate">
+	
+
+
+	
+		<img src="./valen_files/bullet_star_off.png" alt="-" class="mini_rate">
+	
+
+
+	
+		<img src="./valen_files/bullet_star_off.png" alt="-" class="mini_rate">
+	
+
+
+	
+		<img src="./valen_files/bullet_star_off.png" alt="-" class="mini_rate">
+	
+
+
+	
+		<img src="./valen_files/bullet_star_off.png" alt="-" class="mini_rate">
+	
+
+</span>
+							
+						<br><span class="desc">ME MEOOOOOOOOOOOOOOOOOO</span>					
+						</td>						
+						<td>
+						<a href="http://mymdqueens.com/forum/10-entretenimiento/" title="Retornar a Entretenimiento">Entretenimiento</a>
+						</td>											
+						<td class="short altrow">
+							<a hovercard-ref="member" hovercard-id="874" class="_hovertrigger url fn " href="http://mymdqueens.com/user/874-%e2%80%a2giorgio-milano%e2%80%a2/"><span style="font-weight:bold;color:#0B0B61">•.Giorgio Milano.•</span></a>
+						</td>	
+						<td class="col_f_views desc blend_links">
+							<ul>
+								<li>5 Respuestas</li>
+					
+								<li class="views desc">609 Leidos</li>
+							</ul>
+						</td>					
+						<td class="col_f_post">
+							<a href="http://mymdqueens.com/user/555-jothanuz/" class="ipsUserPhotoLink left">
+								<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_mini">
+							</a>						
+							<ul class="last_post ipsType_small">
+								<li>
+									<a href="http://mymdqueens.com/topic/78451-antes-muerta-que-sencilla/page__view__getlastpost" title="Ir al último mensaje"><img src="./valen_files/last_post.png" alt="" title="Ver último mensaje"></a> <a href="http://mymdqueens.com/topic/78451-antes-muerta-que-sencilla/page__view__getlastpost" title="Ir al último mensaje">10 mayo 2012 - 04:01 </a>
+								</li>
+								<li>Por: <a hovercard-ref="member" hovercard-id="555" class="_hovertrigger url fn " href="http://mymdqueens.com/user/555-jothanuz/"><span style="font-weight:bold;color:#254117">JothanUz</span></a></li>
+							</ul>
+						</td>
+					</tr>
+				
+
+					<tr class="row1 __topic unread expandable" id="trow_73106" data-tid="73106">					
+						<td class="short altrow">
+							
+						</td>						
+						<td>
+							<a href="http://mymdqueens.com/topic/73106-omg-que-miedo-la-mejor-vidente-de-mexico-dice-que-chavez-morira-en-el-2013-y-hasta-entonces-dejara-en-paz-a-venezuela/page__view__getnewpost" title="Ir al primer mensaje no leído "><img src="./valen_files/new_post.png" alt="" title="Ir al primer mensaje no leído "></a>
+							 							
+													
+							
+																			
+							<h4><a id="tid-link-73106" href="http://mymdqueens.com/topic/73106-omg-que-miedo-la-mejor-vidente-de-mexico-dice-que-chavez-morira-en-el-2013-y-hasta-entonces-dejara-en-paz-a-venezuela/" title="Ver tema, empezado 04 octubre 2011 - 04:56 " class="topic_title">Omg QUE MIEDO! LA MEJOR VIDENTE DE MÉXICO DICE QUE CHÁVEZ MORIRÁ EN EL 2013 Y HASTA ENTONCES DEJARA EN PAZ A VENEZUELA</a></h4>
+							<br>
+							<span class="desc lighter blend_links">
+								
+							</span>
+							
+							
+							
+						<br><span class="desc">QUE VA A CUBA PORQUE ALLÁ REALIZA SANTÉRIA CON LOS RESTOS DE BOLÍVAR</span>					
+						</td>						
+						<td>
+						<a href="http://mymdqueens.com/forum/10-entretenimiento/" title="Retornar a Entretenimiento">Entretenimiento</a>
+						</td>											
+						<td class="short altrow">
+							<a hovercard-ref="member" hovercard-id="231" class="_hovertrigger url fn " href="http://mymdqueens.com/user/231-vianney/"><span style="font-weight:bold;color:#212020">Vianney</span></a>
+						</td>	
+						<td class="col_f_views desc blend_links">
+							<ul>
+								<li>11 Respuestas</li>
+					
+								<li class="views desc">1.929 Leidos</li>
+							</ul>
+						</td>					
+						<td class="col_f_post">
+							<a href="http://mymdqueens.com/user/555-jothanuz/" class="ipsUserPhotoLink left">
+								<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_mini">
+							</a>						
+							<ul class="last_post ipsType_small">
+								<li>
+									<a href="http://mymdqueens.com/topic/73106-omg-que-miedo-la-mejor-vidente-de-mexico-dice-que-chavez-morira-en-el-2013-y-hasta-entonces-dejara-en-paz-a-venezuela/page__view__getlastpost" title="Ir al último mensaje"><img src="./valen_files/last_post.png" alt="" title="Ver último mensaje"></a> <a href="http://mymdqueens.com/topic/73106-omg-que-miedo-la-mejor-vidente-de-mexico-dice-que-chavez-morira-en-el-2013-y-hasta-entonces-dejara-en-paz-a-venezuela/page__view__getlastpost" title="Ir al último mensaje">10 mayo 2012 - 03:56 </a>
+								</li>
+								<li>Por: <a hovercard-ref="member" hovercard-id="555" class="_hovertrigger url fn " href="http://mymdqueens.com/user/555-jothanuz/"><span style="font-weight:bold;color:#254117">JothanUz</span></a></li>
+							</ul>
+						</td>
+					</tr>
+				
+
+					<tr class="row2 __topic unread expandable" id="trow_74110" data-tid="74110">					
+						<td class="short altrow">
+							
+						</td>						
+						<td>
+							<a href="http://mymdqueens.com/topic/74110-trivia-cuantas-mujeres-ves/page__view__getnewpost" title="Ir al primer mensaje no leído "><img src="./valen_files/new_post.png" alt="" title="Ir al primer mensaje no leído "></a>
+							 							
+													
+							
+																			
+							<h4><a id="tid-link-74110" href="http://mymdqueens.com/topic/74110-trivia-cuantas-mujeres-ves/" title="Ver tema, empezado 20 octubre 2011 - 02:00 " class="topic_title">TRIVIA" CUANTAS MUJERES VES"?</a></h4>
+							<br>
+							<span class="desc lighter blend_links">
+								
+							</span>
+							
+							
+							
+						<br><span class="desc">La nueva era Mymdqueens.</span>					
+						</td>						
+						<td>
+						<a href="http://mymdqueens.com/forum/10-entretenimiento/" title="Retornar a Entretenimiento">Entretenimiento</a>
+						</td>											
+						<td class="short altrow">
+							<a hovercard-ref="member" hovercard-id="874" class="_hovertrigger url fn " href="http://mymdqueens.com/user/874-%e2%80%a2giorgio-milano%e2%80%a2/"><span style="font-weight:bold;color:#0B0B61">•.Giorgio Milano.•</span></a>
+						</td>	
+						<td class="col_f_views desc blend_links">
+							<ul>
+								<li>2 Respuestas</li>
+					
+								<li class="views desc">825 Leidos</li>
+							</ul>
+						</td>					
+						<td class="col_f_post">
+							<a href="http://mymdqueens.com/user/555-jothanuz/" class="ipsUserPhotoLink left">
+								<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_mini">
+							</a>						
+							<ul class="last_post ipsType_small">
+								<li>
+									<a href="http://mymdqueens.com/topic/74110-trivia-cuantas-mujeres-ves/page__view__getlastpost" title="Ir al último mensaje"><img src="./valen_files/last_post.png" alt="" title="Ver último mensaje"></a> <a href="http://mymdqueens.com/topic/74110-trivia-cuantas-mujeres-ves/page__view__getlastpost" title="Ir al último mensaje">10 mayo 2012 - 03:43 </a>
+								</li>
+								<li>Por: <a hovercard-ref="member" hovercard-id="555" class="_hovertrigger url fn " href="http://mymdqueens.com/user/555-jothanuz/"><span style="font-weight:bold;color:#254117">JothanUz</span></a></li>
+							</ul>
+						</td>
+					</tr>
+				
+
+					<tr class="row1 __topic unread expandable" id="trow_82376" data-tid="82376">					
+						<td class="short altrow">
+							
+						</td>						
+						<td>
+							<a href="http://mymdqueens.com/topic/82376-mi-top-eurovision-2012-semifinalistas/page__view__getnewpost" title="Ir al primer mensaje no leído "><img src="./valen_files/new_post.png" alt="" title="Ir al primer mensaje no leído "></a>
+							 							
+													
+							
+																			
+							<h4><a id="tid-link-82376" href="http://mymdqueens.com/topic/82376-mi-top-eurovision-2012-semifinalistas/" title="Ver tema, empezado 15 abril 2012 - 11:24 " class="topic_title">MI TOP EUROVISION 2012 - SEMIFINALISTAS</a></h4>
+							<br>
+							<span class="desc lighter blend_links">
+								
+									&nbsp; <img src="./valen_files/icon_tag.png"> 
+								
+							</span>
+							
+							
+							
+						<br><span class="desc">LOS QUE CONSIDERO DEBEN PASAR A LA FINAL</span>					
+						</td>						
+						<td>
+						<a href="http://mymdqueens.com/forum/10-entretenimiento/" title="Retornar a Entretenimiento">Entretenimiento</a>
+						</td>											
+						<td class="short altrow">
+							<a hovercard-ref="member" hovercard-id="246" class="_hovertrigger url fn " href="http://mymdqueens.com/user/246-%e2%98%86-musico-%e2%98%86/"><span style="font-weight:bold;color:#180000;">☆ Músico ☆</span></a>
+						</td>	
+						<td class="col_f_views desc blend_links">
+							<ul>
+								<li>17 Respuestas</li>
+					
+								<li class="views desc">751 Leidos</li>
+							</ul>
+						</td>					
+						<td class="col_f_post">
+							<a href="http://mymdqueens.com/user/370-ga%e0%b8%87iera-%d6%86aade/" class="ipsUserPhotoLink left">
+								<img src="./valen_files/default_large.png" class="ipsUserPhoto ipsUserPhoto_mini">
+							</a>						
+							<ul class="last_post ipsType_small">
+								<li>
+									<a href="http://mymdqueens.com/topic/82376-mi-top-eurovision-2012-semifinalistas/page__view__getlastpost" title="Ir al último mensaje"><img src="./valen_files/last_post.png" alt="" title="Ver último mensaje"></a> <a href="http://mymdqueens.com/topic/82376-mi-top-eurovision-2012-semifinalistas/page__view__getlastpost" title="Ir al último mensaje">10 mayo 2012 - 12:35 </a>
+								</li>
+								<li>Por: <a hovercard-ref="member" hovercard-id="370" class="_hovertrigger url fn " href="http://mymdqueens.com/user/370-ga%e0%b8%87iera-%d6%86aade/"><span style="font-weight:bold;color:#000000">Ģąงĭęŗą ֆąąďę</span></a></li>
+							</ul>
+						</td>
+					</tr>
+				
+				
+		</tbody></table>
+	</div>
+</div>
+<!-- Close topic -->
+</div>
+<!-- BOTTOM BUTTONS -->
+
+	<br>
+	<div class="clear clearfix left">
+		
+
+	<ul class="topic_share left shareButtons ipsList_inline">
+	
+		<li><a href="http://mymdqueens.com/index.php?sharelink=twitter;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante Twitter" class="_slink" id="slink_twitter"><img src="./valen_files/twitter(1).png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=facebook;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante Facebook" class="_slink" id="slink_facebook"><img src="./valen_files/facebook.png"></a></li>
+	
+
+		
+				<script type="text/javascript" src="./valen_files/plusone.js" gapi_processed="true"></script>
+<li><div class="googlePlusOne"><div id="___plusone_0" style="height: 15px; width: 24px; display: inline-block; text-indent: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; background-image: initial; background-attachment: initial; background-origin: initial; background-clip: initial; background-color: transparent; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; background-position: initial initial; background-repeat: initial initial; "><iframe allowtransparency="true" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="width: 24px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; height: 15px; position: static; left: 0px; top: 0px; visibility: visible; " tabindex="0" vspace="0" width="100%" id="I1_1339565031077" name="I1_1339565031077" src="./valen_files/fastbutton.htm" title="+1"></iframe></div></div></li>
+			
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=digg;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante Digg" class="_slink" id="slink_digg"><img src="./valen_files/digg.png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=delicious;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante Del.icio.us" class="_slink" id="slink_delicious"><img src="./valen_files/delicious.png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=reddit;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante Reddit" class="_slink" id="slink_reddit"><img src="./valen_files/reddit.png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=stumble;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante StumbleUpon" class="_slink" id="slink_stumble"><img src="./valen_files/stumble.png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=email;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Compartir mediante Email" class="_slink" id="slink_email"><img src="./valen_files/email.png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=print;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Imprimir" class="_slink" id="slink_print"><img src="./valen_files/print.png"></a></li>
+	
+
+		<li><a href="http://mymdqueens.com/index.php?sharelink=download;aHR0cDovL215bWRxdWVlbnMuY29tL3RvcGljLzQ5MDYxLWhhYmlhbi12aXN0by1lc3Rhcy1kZS1tYWNyaS12ZWxlei8,;SGFiaWFuIHZpc3RvIGVzdGFzIGRlIE1hY3JpIFZlbGV6Pz8," rel="nofollow" target="_blank" title="Descargar" class="_slink" id="slink_download"><img src="./valen_files/download.png"></a></li>
+	
+	</ul>
+	<script type="text/javascript">
+		ipb.sharelinks.url   = "http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/";
+		ipb.sharelinks.title = "Habian visto estas de Macri Velez??";
+		ipb.sharelinks.bname = "MYMDQUEENS Reinas de Belleza Internacional";
+	</script>
+
+	</div>
+	<br>
+
+<!-- ACTIVE USERS -->
+<div id="topic_stats" class="statistics clear clearfix">
+		<div id="topic_active_users" class="active_users">
+			<h4 class="statistics_head">1 Usuario(s) están leyendo este Tema</h4>
+			<p class="statistics_brief desc">0 miembro(s), 1 invitado(s), 0 usuario(s) anónimo(s)</p>
+			
+		</div>
+	</div>
+
+<script type="text/javascript" src="./valen_files/prettify.js"></script>
+	<script type="text/javascript" src="./valen_files/lang-sql.js"></script>
+	<!-- By default we load generic code, php, css, sql and xml/html; load others here if desired -->
+	<script type="text/javascript">
+	//<![CDATA[
+		Event.observe( window, 'load', function(e){ prettyPrint() });
+	//]]>
+	</script>
+<div id="multiQuoteInsert" style="display: none;" class="ipsFloatingAction">
+	<span class="ipsButton no_width" id="mqbutton">Responder a los Post citados</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" id="multiQuoteClear" class="ipsType_smaller desc" title="Borrar los mensajes que ha seleccionado con MultiCitas">Borrar</a> &nbsp;&nbsp;&nbsp;
+</div>
+				
+				<ol class="breadcrumb bottom ipsList_inline left clearfix clear">
+											<li><a href="http://mymdqueens.com/">MYMDQUEENS Reinas de Belleza Internacional</a></li>
+							
+						
+							<li><span class="nav_sep">→ </span> <a href="http://mymdqueens.com/forum/3-certamenes-nacionales-e-internacionales/" title="Volver a  Certamenes Nacionales e Internacionales">Certamenes Nacionales e Internacionales</a></li>
+							
+						
+
+							<li><span class="nav_sep">→ </span> <a href="http://mymdqueens.com/forum/4-reinas-de-belleza-internacional/" title="Volver a  Reinas de Belleza Internacional">Reinas de Belleza Internacional</a></li>
+							
+						
+
+				
+				</ol>
+			</div>
+			<!-- ::: FOOTER (Change skin, language, mark as read, etc) ::: -->
+			<div id="footer_utilities" class="main_width clearfix clear">
+				<a rel="nofollow" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#top" id="backtotop" title="Ir arriba"><img src="./valen_files/top.png" alt=""></a>
+<div id="webutation-badge">
+ <script type="text/javascript" async="" src="./valen_files/load_badge.js"></script><script type="text/javascript" id="webutation-script">
+  (function() {
+    function async_load(){
+     var s = document.createElement('script'); s.type = 'text/javascript'; s.async = true;
+     s.src = 'http://www.webutation.net/js/load_badge.js';
+     var x = document.getElementById('webutation-script'); x.parentNode.insertBefore(s, x); }
+    if (window.attachEvent) window.attachEvent('onload', async_load); else window.addEventListener('load', async_load, false);
+  })();
+ </script>
+ <a id="webutation-link" href="http://www.webutation.net/go/review/mymdqueens.com"><img src="./valen_files/mymdqueens.com.png" alt="Webutation" height="44" width="158" id="webutation-badge-image"></a>
+
+<li class="right button boardrules small">
+							<a href="http://mymdqueens.com/index.php?app=forums&module=extras&section=boardrules">Política de Uso Aceptable</a>
+						</li>
+<span id="siteseal"><script type="text/javascript" src="./valen_files/getSeal"></script><img style="cursor:pointer;cursor:hand" width="132" height="31" src="./valen_files/siteseal_sf_3_h_d_m.gif" onclick="verifySeal();"></span>
+<img src="./valen_files/barcode.png" width="40px" height="40px" title="www.mymdqueens.com">
+
+<!--?echo 'Memoria usada: ' . round(memory_get_usage() / 1024,1) . ' KB de ' . round(memory_get_usage(1) / 1024,1) . ' KB';?-->
+
+</div>
+
+
+
+				<ul class="ipsList_inline left">
+					<li>
+						<img src="./valen_files/feed.png" alt="Canal RSS" id="rss_feed" class="clickable"><ul id="rss_menu" class="ipbmenu_content" style="position: absolute; z-index: 9999; display: none; "><li style="z-index: 10000; "><a href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=1" title="General" style="z-index: 10000; ">General</a></li>
+<li style="z-index: 10000; "><a href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=2" title="Certamenes Masculinos" style="z-index: 10000; ">Certamenes Masculinos</a></li>
+<li style="z-index: 10000; "><a href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=3" title="Certamenes Femeninos" style="z-index: 10000; ">Certamenes Femeninos</a></li>
+<li style="z-index: 10000; "><a href="http://mymdqueens.com/index.php?app=core&module=global&section=rss&type=calendar&id=4" title="Dinámicas" style="z-index: 10000; ">Dinámicas</a></li></ul>
+					</li>
+					
+							<li>
+								<a rel="nofollow" id="new_skin" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" class="">Cambiar Estilo</a>			
+								<ul id="new_skin_menucontent" class="ipbmenu_content with_checks" style="position: absolute; z-index: 9999; display: none; ">
+									
+										<li class="selected" style="z-index: 10000; ">
+											<a href="http://mymdqueens.com/index.php?showtopic=49061&k=880ea6a14ea49e853634fbdc5015a024&settingNewSkin=52" style="z-index: 10000; ">mymdqueens</a>
+										</li>
+									
+
+										<li style="z-index: 10000; ">
+											<a href="http://mymdqueens.com/index.php?showtopic=49061&k=880ea6a14ea49e853634fbdc5015a024&settingNewSkin=56" style="z-index: 10000; ">mymdqueens_mobile</a>
+										</li>
+									
+								</ul>
+							</li>
+					
+						<li>
+							<a rel="nofollow" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" id="new_language" class="">Español (ES)</a>							
+							<ul id="new_language_menucontent" class="ipbmenu_content with_checks" style="position: absolute; z-index: 9999; display: none; ">
+								
+									<li style="z-index: 10000; ">
+										<a href="http://mymdqueens.com/index.php?showtopic=49061&k=880ea6a14ea49e853634fbdc5015a024&setlanguage=1&langurlbits=showtopic=49061&cal_id=&langid=1" style="z-index: 10000; ">Español (ESP)</a>
+									</li>
+								
+
+									<li class="selected" style="z-index: 10000; ">
+										<a href="http://mymdqueens.com/index.php?showtopic=49061&k=880ea6a14ea49e853634fbdc5015a024&setlanguage=1&langurlbits=showtopic=49061&cal_id=&langid=5" style="z-index: 10000; ">Español (ES)</a>
+									</li>
+								
+							</ul>
+						</li>
+					<li>
+								<a href="http://mymdqueens.com/index.php?app=contactus">Contact Us</a>
+							</li>
+					<li>
+						<a rel="nofollow" id="mark_all_read" href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=all&k=880ea6a14ea49e853634fbdc5015a024" title="Marcar todo como leído" class="">Marcar Foro como Leído</a>
+						<ul id="mark_all_read_menucontent" class="ipbmenu_content" style="position: absolute; z-index: 9999; display: none; ">
+							
+								<li style="z-index: 10000; ">
+									
+								</li>
+							
+
+								<li style="z-index: 10000; ">
+									<a href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=app&markApp=forums&k=880ea6a14ea49e853634fbdc5015a024" style="z-index: 10000; ">Forums</a>
+								</li>
+							
+
+								<li style="z-index: 10000; ">
+									<a href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=app&markApp=gallery&k=880ea6a14ea49e853634fbdc5015a024" style="z-index: 10000; ">Fotos</a>
+								</li>
+							
+
+								<li style="z-index: 10000; ">
+									<a href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=app&markApp=videos&k=880ea6a14ea49e853634fbdc5015a024" style="z-index: 10000; ">Videos</a>
+								</li>
+							
+
+								<li style="z-index: 10000; ">
+									<a href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=app&markApp=tutorials&k=880ea6a14ea49e853634fbdc5015a024" style="z-index: 10000; ">Tutoriales</a>
+								</li>
+							
+
+								<li style="z-index: 10000; ">
+									<a href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=app&markApp=tickets&k=880ea6a14ea49e853634fbdc5015a024" style="z-index: 10000; ">Help Desk</a>
+								</li>
+							
+							<li style="z-index: 10000; ">
+								<a href="http://mymdqueens.com/index.php?app=forums&module=forums&section=markasread&marktype=all&k=880ea6a14ea49e853634fbdc5015a024" style="z-index: 10000; "><strong style="z-index: 10000; ">Marcar todo como leído</strong></a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="http://mymdqueens.com/index.php?app=core&module=help" title="Ver Ayuda" rel="help" accesskey="6">Ayuda</a>
+					</li>	
+				
+				</ul>
+				 
+
+			</div>
+
+			
+
+			
+			
+				<script type="text/javascript" src="./valen_files/lightbox.js"></script>
+<script type="text/javascript">
+//<![CDATA[
+	// Lightbox Configuration
+	LightboxOptions = Object.extend({
+	    fileLoadingImage:        'http://mymdqueens.com/public/style_images/mymdqueens_images/lightbox/loading.gif',     
+	    fileBottomNavCloseImage: 'http://mymdqueens.com/public/style_images/mymdqueens_images/lightbox/closelabel.gif',
+	    overlayOpacity: 0.8,   // controls transparency of shadow overlay
+	    animate: true,         // toggles resizing animations
+	    resizeSpeed: 7,        // controls the speed of the image resizing animations (1=slowest and 10=fastest)
+	    borderSize: 10,         //if you adjust the padding in the CSS, you will need to update this variable
+		// When grouping images this is used to write: Image # of #.
+		// Change it for non-english localization
+		labelImage: "Imagen",
+		labelOf: "de"
+	}, window.LightboxOptions || {});
+/* Watch for a lightbox image and set up our downloadbutton watcher */
+document.observe('click', (function(event){
+    var target = event.findElement('a[rel*="lightbox"]') || event.findElement('area[rel*="lightbox"]') || event.findElement('span[rel*="lightbox"]');
+    if (target) {
+        event.stop();
+        gbl_addDownloadButton();
+    }
+}).bind(this));
+var _to    = '';
+var _last  = '';
+function gbl_addDownloadButton()
+{
+	if ( typeof( ipsLightbox.lightboxImage ) != 'undefined' && ipsLightbox.lightboxImage.src )
+	{
+		if ( _last != ipsLightbox.lightboxImage.src )
+		{
+			if ( ! $('gbl_d') )
+			{
+				$('bottomNav').insert( { top: "<div id='gbl_d' style='text-align:right;padding-bottom:4px;'></div>" } );
+			}
+			
+			$('gbl_d').update( "<a href='"+ ipsLightbox.lightboxImage.src + "' target='_blank'><img src='http://mymdqueens.com/public/style_images/mymdqueens_images/lightbox/download-icon.png' /></a>" );
+			
+			_last = ipsLightbox.lightboxImage.src;
+		}
+	}
+	
+	/* Check for init and then keep checking for new image */
+	_to = setTimeout( "gbl_addDownloadButton()", 1000 );
+}
+//]]>
+</script>
+			
+
+		</div>
+		
+		
+
+	
+</div><div id="overlay" style="opacity: 0.8; width: 1263px; height: 7071px; "></div><div id="goog-gt-tt" class="skiptranslate"><div style="overflow:hidden"><div class="logo"><img src="./valen_files/mini_google.png"></div><a class="close-button" href="javascript:void(0)" title="Close"><img src="./valen_files/cleardot.gif" width="15" height="15" style="background-image:url(http://translate.googleapis.com/translate_static/img/te_ctrl3.gif); background-position:-28px 0px"></a></div><div class="top"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="title left">Original Text:</div></div><div class="middle"><div class="original-text"></div></div><div class="bottom"><div class="activity-links"><span class="activity-link">Mostrar traducciones alternativas</span></div><div class="started-activity-container"><hr style="color: #CCC; background-color: #CCC; height: 1px; border: none;"><div class="activity-root"></div></div></div><div class="status-message" style="display: none; "></div></div><div id="lightbox" style="top: 792.3px; left: 0px; "><div id="outerImageContainer" style="height: 740px; font-size: 76.80608px; width: 499px; "><div id="imageContainer"><img id="lightboxImage" style="" src="./valen_files/167845_489911257198_717662198_6253443_3383029_n.jpg" width="478" height="720"><div id="hoverNav" style=""><a id="prevLink" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" style="display: none; height: 720px; "></a><a id="nextLink" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#" style="display: none; height: 720px; "></a></div><div id="loading" style="display: none; "><a id="loadingLink" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#"><img src="./valen_files/loading.gif"></a></div></div></div><div id="imageDataContainer" style="width: 499px; "><div id="imageData" style=""><div id="imageDetails"><span id="caption">Imagen enviada</span><span id="numberDisplay" style="display: none; "></span></div><div id="bottomNav"><div id="gbl_d" style="text-align:right;padding-bottom:4px;"><a href="./valen_files/167845_489911257198_717662198_6253443_3383029_n.jpg" target="_blank"><img src="./valen_files/download-icon.png"></a></div><a id="bottomNavClose" href="http://mymdqueens.com/topic/49061-habian-visto-estas-de-macri-velez/#"><img src="./valen_files/closelabel.gif"></a></div></div></div></div><iframe frameborder="0" class="goog-te-menu-frame skiptranslate" style="visibility: visible; box-sizing: content-box; width: 461px; height: 274px; display: none; "></iframe></body></html>
